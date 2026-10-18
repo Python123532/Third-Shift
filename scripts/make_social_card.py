@@ -87,7 +87,7 @@ tag_f = ImageFont.truetype(str(fonts / "Inter-SemiBold.otf"), 26)
 
 left = 31 * PX  # x = 620
 right = W - SAFE - 20
-d.text((left, 92), "Night Shift", font=title_f, fill=TEXT)
+d.text((left, 92), "Third Shift", font=title_f, fill=TEXT)
 lines = ["A task queue in a Google Sheet that", "Claude works through while you sleep."]
 y = 232
 for line in lines:
@@ -96,7 +96,7 @@ for line in lines:
 d.text((left + 4, y + 26), "TASK create  ·  TASK queue  ·  TASK review", font=tag_f, fill=ACCENT)
 
 # Check the text fits inside the safe area and above the sea
-for text, f, x0, y0 in [("Night Shift", title_f, left, 92),
+for text, f, x0, y0 in [("Third Shift", title_f, left, 92),
                         (lines[1], sub_f, left + 4, 276),
                         ("TASK create  ·  TASK queue  ·  TASK review", tag_f, left + 4, y + 26)]:
     bb = d.textbbox((x0, y0), text, font=f)

@@ -2,12 +2,12 @@
 
 Run by 'TASK setup'. Re-running it lets the user change any answer. Use clickable multiple-choice questions where possible, at most 4 questions per card.
 
-## 0. Say what Night Shift needs, before doing anything
+## 0. Say what Third Shift needs, before doing anything
 First check that the Google Drive and Google Sheets connectors are available. If either is missing, name it, say to add it in Settings > Connectors, and stop until they have.
 
 Then show this as a reply (not inside tool calls), and ask 'OK to go ahead?' with the answers 'Yes', 'No', and a question of their own:
 
-> **What Night Shift uses, and why**
+> **What Third Shift uses, and why**
 > | Access | What it does with it |
 > |---|---|
 > | Google Sheets | Reads and writes one sheet named 'Task Manager'. No other sheets. |
@@ -53,12 +53,12 @@ Ask, then save each answer to __settings__ under these exact names:
 ## 5. Create the scheduled runs
 Offer to create one scheduled task per Run Time. The first Run Time's task uses this prompt:
 
-> Scheduled run of the user's Night Shift task queue (First run of Offline Mode). Nobody is watching. Load the night-shift skill and follow plans/scheduled-run.md exactly. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). If the night-shift skill isn't available in this session, add one row to the Run Reviews tab saying so, then stop.
+> Scheduled run of the user's Third Shift task queue (First run of Offline Mode). Nobody is watching. Load the third-shift skill and follow plans/scheduled-run.md exactly. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). If the third-shift skill (older installs call it night-shift) isn't available in this session, add one row to the Run Reviews tab saying so, then stop.
 
 - Use it for the first Run Time, and turn on its push notification so the digest reaches the user.
 - Every other Run Time gets this cheaper prompt, which skips loading the skill when there's nothing to do:
 
-> Scheduled run of the user's Night Shift task queue (Regular run). Nobody is watching. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). First, read only the Last Status and Runs columns of its Tasks tab. If no row has Runs 'Daily queue' and Last Status 'Not started' or 'In progress', reply 'Queue empty.' and stop. Otherwise load the night-shift skill and follow plans/scheduled-run.md exactly. If the skill isn't available, add one row to the Run Reviews tab saying so, then stop.
+> Scheduled run of the user's Third Shift task queue (Regular run). Nobody is watching. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). First, read only the Last Status and Runs columns of its Tasks tab. If no row has Runs 'Daily queue' and Last Status 'Not started' or 'In progress', reply 'Queue empty.' and stop. Otherwise load the third-shift skill and follow plans/scheduled-run.md exactly. If the skill (older installs call it night-shift) isn't available, add one row to the Run Reviews tab saying so, then stop.
 
 - Leave push notifications off for these.
 

@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Gives an independent second rating of one finished Night Shift task. Use only when the user asks for a second opinion, for example 'TASK review (ID) check'. Pass it the sheet ID and the task ID.
+description: Gives an independent second rating of one finished Third Shift task. Use only when the user asks for a second opinion, for example 'TASK review (ID) check'. Pass it the sheet ID and the task ID.
 ---
 
 You are a reviewer who did not do this work. Judge the output only against what was asked.

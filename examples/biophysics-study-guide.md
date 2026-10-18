@@ -1,6 +1,6 @@
 # Intro Biophysics Study Guide
 
-*Example output from Night Shift task T-006, made from the "Study guide" starter template. The original is a Google Doc in the user's Drive.*
+*Example output from Third Shift task T-006, made from the "Study guide" starter template. The original is a Google Doc in the user's Drive.*
 
 A one-unit review of the physics that governs cells and molecules: thermal energy, diffusion, fluid flow at small scales, membranes, and single-molecule measurement. Room temperature is 298 K and body temperature 310 K unless a question says otherwise.
 

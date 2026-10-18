@@ -1,8 +1,10 @@
-<img src="assets/icon.png" width="96" alt="Night Shift icon: a pixel crescent moon with drifting z's over a night sea">
+<img src="assets/icon.png" width="96" alt="Third Shift icon: a pixel crescent moon with drifting z's over a night sea">
 
-# Night Shift: a task queue for Claude
+# Third Shift: a task queue for Claude
 
-Hand Claude a list of work and get it back done, rated, and ready for review. Night Shift gives Claude three things a plain prompt doesn't have:
+*Formerly Night Shift. If you installed it under that name, download the new zip below and replace the old one.*
+
+Hand Claude a list of work and get it back done, rated, and ready for review. Third Shift gives Claude three things a plain prompt doesn't have:
 
 - **A checkpointed queue.** Tasks live in a Google Sheet, ordered by priority, due date, and dependencies. Claude saves after every step, so a run that gets cut off picks up exactly where it stopped, even days later and from any chat.
 - **Your standards, per project.** Tell it once what good work looks like for each kind of task (vetted sources for research, three thumbnails before refining for art, tests passing for code), and every task with that tag follows it.
@@ -12,7 +14,7 @@ The work runs on a schedule you pick, while you're offline, and the first run of
 
 ## Why not just a scheduled task and a good prompt?
 
-You can schedule a prompt in Claude already, and for one repeating job that's often enough. Night Shift is for when you have several jobs at once. A scheduled prompt runs the same instruction every time and forgets what happened last run. Night Shift decides what to work on each night from your queue, remembers how far each task got, holds every task to the standards you set for its project, and keeps score of how its self-ratings compare with yours. Each run is an ordinary scheduled task; Night Shift is what tells it which work to do and how to judge it.
+You can schedule a prompt in Claude already, and for one repeating job that's often enough. Third Shift is for when you have several jobs at once. A scheduled prompt runs the same instruction every time and forgets what happened last run. Third Shift decides what to work on each night from your queue, remembers how far each task got, holds every task to the standards you set for its project, and keeps score of how its self-ratings compare with yours. Each run is an ordinary scheduled task; Third Shift is what tells it which work to do and how to judge it.
 
 ## A real example
 
@@ -47,11 +49,11 @@ Not great for: anything that needs a person to click "send" or "buy" (it drafts 
 
 ## Install
 
-**Most people: the plugin.** Download [`dist/night-shift-plugin.zip`](dist/night-shift-plugin.zip) and upload it in Claude where you add plugins. It includes the skill, a `/night-shift:task` command, and a reviewer for second opinions. To update later, download the newest zip and upload it again.
+**Most people: the plugin.** Download [`dist/third-shift-plugin.zip`](dist/third-shift-plugin.zip) and upload it in Claude where you add plugins. It includes the skill, a `/third-shift:task` command, and a reviewer for second opinions. To update later, download the newest zip and upload it again.
 
-**Skill only:** if your Claude doesn't offer plugin uploads, download [`dist/night-shift.zip`](dist/night-shift.zip) and upload it in **Settings > Skills**. Everything works except the second-opinion reviewer.
+**Skill only:** if your Claude doesn't offer plugin uploads, download [`dist/third-shift.zip`](dist/third-shift.zip) and upload it in **Settings > Skills**. Everything works except the second-opinion reviewer.
 
-**Claude Code:** `/plugin marketplace add Python123532/claude-task-manager`, then `/plugin install night-shift@night-shift`. Get updates with `/plugin marketplace update night-shift`.
+**Claude Code:** `/plugin marketplace add Python123532/claude-task-manager`, then `/plugin install third-shift@third-shift`. Get updates with `/plugin marketplace update third-shift`.
 
 Install one of these, not two: two copies would both answer `TASK` commands.
 
@@ -76,11 +78,11 @@ Runs never send messages, submit forms, buy anything, post publicly, or delete a
 
 **Text inside your sources is information, not instructions.** If a web page, document, or email that a task reads says something like "ignore your instructions and...", the run is told to treat it as content, not a command, and to keep to your task and the limits above.
 
-Your sheet and tasks are yours alone. Nothing is shared with the author or anyone else who uses Night Shift. The plugin has no server of its own and sends nothing anywhere except through your own connectors.
+Your sheet and tasks are yours alone. Nothing is shared with the author or anyone else who uses Third Shift. The plugin has no server of its own and sends nothing anywhere except through your own connectors.
 
 ## How it fits with Claude's scheduled tasks
 
-Night Shift's runs are ordinary scheduled tasks, so you'll see them in your scheduled tasks list as "Night Shift: first run" and "Night Shift: regular run". Pause, resume, or change their notifications there. Night Shift decides what each run works on; the scheduled task just decides when it runs. Your other scheduled tasks are untouched.
+Third Shift's runs are ordinary scheduled tasks, so you'll see them in your scheduled tasks list as "Third Shift: first run" and "Third Shift: regular run". Pause, resume, or change their notifications there. Third Shift decides what each run works on; the scheduled task just decides when it runs. Your other scheduled tasks are untouched.
 
 ## Files on your computer
 
@@ -134,7 +136,7 @@ Add your own columns or tabs any time. Claude finds columns by name, so nothing 
 | Path | What it is |
 |---|---|
 | `dist/` | Ready-to-upload zips: the plugin, and the skill on its own |
-| `skills/night-shift/` | The skill: `SKILL.md` plus `plans/`, which load only when a command needs them |
+| `skills/third-shift/` | The skill: `SKILL.md` plus `plans/`, which load only when a command needs them |
 | `commands/`, `agents/`, `.claude-plugin/` | The plugin's slash command, reviewer, and manifests |
 | `assets/`, `scripts/` | The icon and social card, and the scripts that draw them and build the zips |
 

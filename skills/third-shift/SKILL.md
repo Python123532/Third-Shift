@@ -1,9 +1,9 @@
 ---
-name: night-shift
-description: A task queue kept in a Google Sheet that works across every chat. Claude works through the queue in scheduled runs while the user is offline, saves after every step, rates its own work, and adapts to how each user works. Use whenever a message starts with TASK (setup, create, execute, status, queue, review, edit, split, digest, doctor, help, or any other word after TASK), when they reply to a Night Shift digest, or when the user asks to add, check, change, or work on a task in their Night Shift or Task Manager sheet.
+name: third-shift
+description: A task queue kept in a Google Sheet that works across every chat. Claude works through the queue in scheduled runs while the user is offline, saves after every step, rates its own work, and adapts to how each user works. Use whenever a message starts with TASK (setup, create, execute, status, queue, review, edit, split, digest, doctor, help, or any other word after TASK), when they reply to a Third Shift digest, or when the user asks to add, check, change, or work on a task in their Third Shift (formerly Night Shift) or Task Manager sheet.
 ---
 
-# Night Shift
+# Third Shift
 
 The user hands Claude tasks; scheduled runs work on them while the user is offline, save after every milestone, and rate the work; the user reviews it later. Everything personal (schedule, standards, tools, extra columns) is asked from the user and saved in their sheet. () marks something the user fills in.
 

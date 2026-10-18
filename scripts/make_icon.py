@@ -1,4 +1,4 @@
-"""Draws the Night Shift icon: a pixel crescent moon with drifting z's over a night sea.
+"""Draws the Third Shift icon: a pixel crescent moon with drifting z's over a night sea.
 
 Writes assets/icon.svg (crisp at any size) and assets/icon.png (512 px).
 Run from the repo root: python3 scripts/make_icon.py
