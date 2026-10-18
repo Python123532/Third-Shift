@@ -2,7 +2,7 @@
 
 # Third Shift: a task queue for Claude
 
-*Formerly Night Shift. If you installed it under that name, download the new zip below and replace the old one.*
+*Formerly Night Shift. If you installed it under that name, remove Night Shift first, then install the new zip below. Two copies would both answer `TASK` commands.*
 
 Hand Claude a list of work and get it back done, rated, and ready for review. Third Shift gives Claude three things a plain prompt doesn't have:
 
@@ -64,6 +64,7 @@ Install one of these, not two: two copies would both answer `TASK` commands.
 3. It makes a Google Sheet called **Task Manager**, asks when you're usually offline, and sets up the scheduled runs (one a day by default).
 4. It offers a 2-minute sample task, so you see a finished, rated result before the first night.
 5. Add real work with `TASK create (what you want done)`, or start from a template: `TASK create from template`.
+6. Tell Claude what good work looks like for a project, in plain words ("for School tasks, cite only peer-reviewed sources"). It saves that to a **Standards** tab, and every task with that tag follows it.
 
 ## What it can access
 
@@ -128,8 +129,13 @@ Add your own columns or tabs any time. Claude finds columns by name, so nothing 
 
 - **A run hit something unclear.** It doesn't guess. The task goes to *Needs review* with the question in its Notes, and the digest tells you.
 - **A task needs an email sent or a form submitted.** Runs draft it and wait for you.
+- **A task needs a file Claude can't find.** The task waits in *Needs review* and says what's missing. Upload the file in a chat or paste its link, and it picks up from there.
 - **A task's files only exist inside one chat.** Scheduled runs start fresh and can't see them. Put the files in Google Drive or a connected tool.
 - **Something seems off.** Run `TASK doctor`.
+
+## Feedback
+
+Something confusing, broken, or missing? [Open an issue](https://github.com/Python123532/claude-task-manager/issues). Include the command you ran and what you expected; leave out anything private from your sheet.
 
 ## What's in this repo
 
