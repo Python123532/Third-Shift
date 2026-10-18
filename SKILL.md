@@ -80,7 +80,7 @@ If the user's sheet uses older column names, ask them once whether to rename the
 2. **Before writing to a task's row,** read the row again. If Last Updated changed since you first read it, start from the newer row. Never write over a newer change.
 3. **After every change,** update Last Updated. Whenever work is done, add a Log row.
 4. **Output location:** if Spec's 'Output:' line doesn't say where the result goes, create a Google Doc in a Drive folder named 'Task Manager' (create the folder if it doesn't exist) and put the link in Output Link. Never leave the only copy of an output inside a chat.
-5. **Long specs:** if a Spec is longer than 500 characters, create a Google Doc named '(ID) (Name) spec' in the 'Task Manager' folder, move the full text there, keep the first two lines in Spec, and put the doc link in a Spec Doc column.
+5. **Long specs:** if a Spec is longer than 500 characters, create a Google Doc named '(ID) (Name) spec' in the 'Task Manager' folder with the full text, put its link in a Spec Doc column, and rewrite the Spec cell to under 300 characters, keeping all three labeled lines.
 6. **Rating:** when a task finishes, write 'Claude N / You -' in Ratings. N is a whole number from 1 to 10, judged only against the task's Spec and Standards. Aim for 10 and give the score it actually earns. In Notes, give the reason for every point below 10, then a last line starting 'Tip:' with one thing the user could specify better next time. Never write the 'You' number; only 'TASK review' writes it, from the user's answer.
 7. **Runs:**
    - **Daily queue:** scheduled runs pick it up.
