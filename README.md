@@ -14,6 +14,24 @@ The work runs on a schedule you pick, while you're offline, and the first run of
 
 You can schedule a prompt in Claude already, and for one repeating job that's often enough. Night Shift is for when you have several jobs at once. A scheduled prompt runs the same instruction every time and forgets what happened last run. Night Shift decides what to work on each night from your queue, remembers how far each task got, holds every task to the standards you set for its project, and keeps score of how its self-ratings compare with yours. Each run is an ordinary scheduled task; Night Shift is what tells it which work to do and how to judge it.
 
+## A real example
+
+Task T-006, made with `TASK create from template` (Study guide) and run with `TASK execute T-006`:
+
+| | |
+|---|---|
+| **Spec** | What: a study guide for intro biophysics: key terms, main ideas, 10 practice questions with answers. Output: a Google Doc. For: a student reviewing for a test. |
+| **Milestones** | 3/3 done: terms and main ideas, definitions, practice questions and answers |
+| **Output** | [Intro Biophysics Study Guide](examples/biophysics-study-guide.md) (a copy; the original is a Google Doc) |
+| **Ratings** | Claude 8 / You - (not rated yet) |
+| **Why not 10** | -1: no course or textbook was named, so the scope is a general intro choice. -1: equations are plain text in the Doc. All 10 answers were recomputed in code. |
+| **Tip** | Name the course and textbook chapter so the terms and questions match your class. |
+
+How it shows up in the next morning's digest:
+
+> **Finished:** T-006 Intro biophysics study guide ([link](examples/biophysics-study-guide.md)), Claude 8 / You -
+> **Next step:** Review T-005a (about 2 min), which unblocks T-005b.
+
 ## Where it works well
 
 - **Work you don't want to babysit.** Research write-ups, document cleanups, study guides, event plans: anything that breaks into steps.
