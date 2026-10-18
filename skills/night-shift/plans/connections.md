@@ -39,4 +39,4 @@ If the same task detail was changed both in the sheet and in a connected tool, a
 
 ## 4. Never
 - Never delete a file, note, page, or anything else in a connected tool.
-- Unattended runs follow SKILL.md 'Safety' in every tool.
+- Unattended runs follow SKILL.md 'Timing and safety' in every tool.

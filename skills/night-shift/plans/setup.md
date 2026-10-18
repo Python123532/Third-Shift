@@ -48,15 +48,19 @@ Ask this exact question as the question text of a choice card, with the answers 
 Ask, then save each answer to __settings__ under these exact names:
 1. **Timezone:** offer the one their device or memory suggests, plus 'other'.
 2. **Offline Mode:** when are they usually not using Claude? Save as 'h:mm AM - h:mm PM'.
-3. **Run Times:** how many runs a day (1, 2, or 3), and at what times inside Offline Mode? Suggest times 1 to 15 minutes before the hour (such as 2:58 AM), since on-the-hour runs can be delayed. Save comma-separated in time order. Every Run Time must be inside Offline Mode; if one isn't, say so and ask again.
+3. **Run Times:** suggest **1 run a day** (fewest tokens; most people need only this), with 2 or 3 as options for heavier queues. At what times inside Offline Mode? Suggest times 1 to 15 minutes before the hour (such as 2:58 AM), since on-the-hour runs can be delayed. Save comma-separated in time order. Every Run Time must be inside Offline Mode; if one isn't, say so and ask again.
 
 ## 5. Create the scheduled runs
-Offer to create one scheduled task per Run Time. Each task's prompt follows this template:
+Offer to create one scheduled task per Run Time. The first Run Time's task uses this prompt:
 
-> Scheduled run of the user's Night Shift task queue ((First run of Offline Mode | Regular run)). Nobody is watching. Load the night-shift skill and follow plans/scheduled-run.md exactly. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). If the night-shift skill isn't available in this session, add one row to the Run Reviews tab saying so, then stop.
+> Scheduled run of the user's Night Shift task queue (First run of Offline Mode). Nobody is watching. Load the night-shift skill and follow plans/scheduled-run.md exactly. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). If the night-shift skill isn't available in this session, add one row to the Run Reviews tab saying so, then stop.
 
-- Mark the first Run Time's task as 'First run of Offline Mode' and turn on its push notification, so the digest reaches the user.
-- Mark the others 'Regular run'.
+- Use it for the first Run Time, and turn on its push notification so the digest reaches the user.
+- Every other Run Time gets this cheaper prompt, which skips loading the skill when there's nothing to do:
+
+> Scheduled run of the user's Night Shift task queue (Regular run). Nobody is watching. The sheet is the Google Sheet 'Task Manager', ID (sheet ID). First, read only the Last Status and Runs columns of its Tasks tab. If no row has Runs 'Daily queue' and Last Status 'Not started' or 'In progress', reply 'Queue empty.' and stop. Otherwise load the night-shift skill and follow plans/scheduled-run.md exactly. If the skill isn't available, add one row to the Run Reviews tab saying so, then stop.
+
+- Leave push notifications off for these.
 
 ## 6. Close
 Tell the user, in four lines or fewer:

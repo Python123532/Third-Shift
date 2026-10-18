@@ -6,6 +6,10 @@ Hand Claude work, and it gets done while you're offline. Night Shift keeps your 
 
 It starts small on purpose. Your schedule, what "good work" means to you, and which of your tools it uses are all set up by asking you, and saved in your sheet.
 
+## Light on tokens
+
+It only loads the instructions a command needs, reads only the sheet columns it needs, and a scheduled run with nothing to do stops after one small check. The cost that's left is the actual work on your tasks.
+
 ## Where it works well
 
 - **Work you don't want to babysit.** Research write-ups, document cleanups, study guides, event plans, code upkeep: anything that can be broken into steps. Claude saves after each step and picks up where it left off on the next run.
@@ -25,7 +29,7 @@ Not great for: anything that needs a person to click "send" or "buy" (it drafts 
 1. Download [`dist/night-shift.zip`](dist/night-shift.zip) from this repo.
 2. In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload the zip.
 
-**In Claude Code:** run `/plugin install night-shift --marketplace Python123532/claude-task-manager`. This adds `/night-shift:` slash commands and a reviewer for second opinions, and updates itself.
+**In Claude Code:** run `/plugin install night-shift --marketplace Python123532/claude-task-manager`. This adds a `/night-shift:task` slash command and a reviewer for second opinions.
 
 Use one or the other, not both.
 
@@ -33,7 +37,7 @@ Use one or the other, not both.
 
 1. Open a new chat and type `TASK setup`.
 2. Claude shows you exactly what it will access (table below) and asks before creating anything.
-3. It makes a Google Sheet called **Task Manager**, asks when you're usually offline, and sets up the scheduled runs.
+3. It makes a Google Sheet called **Task Manager**, asks when you're usually offline, and sets up the scheduled runs (one a day by default).
 4. Make sure push notifications are on for the first run of the day (setup turns them on; you can check in your scheduled tasks). That run ends by sending you a digest: what finished, what needs you, and what's stuck.
 5. Add your first task: `TASK create (what you want done)`.
 
@@ -90,9 +94,10 @@ Add your own columns or tabs any time. Claude finds columns by name, so nothing 
 
 | Path | What it is |
 |---|---|
-| `dist/night-shift.zip` | The skill, ready to upload |
+| `dist/night-shift.zip` | The skill, ready to upload in Settings > Skills |
+| `dist/night-shift-plugin.zip` | The full plugin, ready to upload as a plugin |
 | `skills/night-shift/` | The skill's source: `SKILL.md` plus `plans/`, which load only when needed |
-| `commands/`, `agents/`, `.claude-plugin/` | The Claude Code plugin: slash commands, the reviewer, and manifests |
+| `commands/`, `agents/`, `.claude-plugin/` | The plugin: the slash command, the reviewer, and manifests |
 | `assets/`, `scripts/` | The icon and social card, and the scripts that draw them and build the zip |
 
 ## License
