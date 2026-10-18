@@ -9,7 +9,7 @@
       "name": "night-shift",
       "source": "./",
       "description": "A task queue in a Google Sheet that Claude works through on a schedule while you're offline.",
-      "version": "1.0.0"
+      "version": "1.1.0"
     }
   ]
 }
