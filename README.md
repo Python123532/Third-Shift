@@ -21,15 +21,15 @@ Task T-006, made with `TASK create from template` (Study guide) and run with `TA
 | | |
 |---|---|
 | **Spec** | What: a study guide for intro biophysics: key terms, main ideas, 10 practice questions with answers. Output: a Google Doc. For: a student reviewing for a test. |
-| **Milestones** | 3/3 done: terms and main ideas, definitions, practice questions and answers |
-| **Output** | [Intro Biophysics Study Guide](examples/biophysics-study-guide.md) (a copy; the original is a Google Doc) |
-| **Ratings** | Claude 8 / You - (not rated yet) |
-| **Why not 10** | -1: no course or textbook was named, so the scope is a general intro choice. -1: equations are plain text in the Doc. All 10 answers were recomputed in code. |
+| **First pass** | Claude 8 / You 7. The reviewer's note: formulas like dc/dx were plain text, not crisp. Sent back with that note. |
+| **Second pass** | Every formula rebuilt as a real equation, units kept upright, answers numbered. Claude 9 / You - (not rated yet). |
+| **Output** | [Intro Biophysics Study Guide](examples/biophysics-study-guide.md) (a copy; the original is a Google Doc with native equations) |
+| **Why not 10** | -1: no course or textbook was named, so the scope is a general intro choice. All 10 answers were recomputed in code. |
 | **Tip** | Name the course and textbook chapter so the terms and questions match your class. |
 
 How it shows up in the next morning's digest:
 
-> **Finished:** T-006 Intro biophysics study guide ([link](examples/biophysics-study-guide.md)), Claude 8 / You -
+> **Finished:** T-006 Intro biophysics study guide ([link](examples/biophysics-study-guide.md)), Claude 9 / You -
 > **Next step:** Review T-005a (about 2 min), which unblocks T-005b.
 
 ## Where it works well
