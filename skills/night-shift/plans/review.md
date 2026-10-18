@@ -1,8 +1,8 @@
 # TASK review (ID, optional)
 
-Ratings are always asked in plain words, never with a choice card.
+Ratings are always asked in plain words, never with a choice card. Replies to a digest ('approve T-005a', 'T-005a: change the intro', 'T-001 8') follow these same rules, as if they'd typed the matching TASK review.
 
-- **No ID:** read only ID, Name, Last Status, Output Link, Ratings, and Notes. Show every Finished task (not parents) whose Ratings has 'You -' as one table in a reply: Task (ID and Name), Output (clickable link), Claude (number), Why not higher (one line from Notes). Ask for a reply like 'T-001 9, T-002a 6', with an optional note after any number, or 'skip'.
+- **No ID:** read only ID, Name, Last Status, Output Link, Ratings, and Notes. Show every task whose Ratings has 'You -' (Finished tasks and repeating tasks; not parents) as one table in a reply: Task (ID and Name), Output (clickable link), Claude (number), Why not higher (one line from Notes). Ask for a reply like 'T-001 9, T-002a 6', with an optional note after any number, or 'skip'.
   - **A number:** write it as the 'You' number. A note goes in Notes as a line starting 'You:'.
   - **skip** (one task or all): write 'You skip'. This command and the digest stop asking about it; 'TASK review (ID)' can still rate it.
   - **Nothing to rate:** say so in one line.

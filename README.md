@@ -68,7 +68,8 @@ Type these at the start of a message. Anything in parentheses is yours to fill i
 | `TASK review` | A table of finished work to rate. Reply like `T-001 9, T-002 7`, or `skip`. With an ID: rate one task, then approve it or send it back. Add `check` after an ID for an independent second rating. |
 | `TASK edit (id) (change)` | Change anything: due date, priority, tag, pause, resume, delete, archive. |
 | `TASK split (id)` | Break a big task into smaller ones, in order. |
-| `TASK digest` | What finished, what's in progress, what needs you, what's stuck. |
+| `TASK digest` | What finished, what's in progress, what needs you, what's stuck, and the one thing to do next. You can reply right to it (`approve T-005a`). |
+| `TASK doctor` | Checks your setup (connectors, sheet, schedule, computer access) and offers fixes. |
 | `TASK help` | This list. |
 
 ## The sheet
@@ -79,6 +80,8 @@ It starts with three tabs: **Tasks**, **Log** (every piece of work done), and **
 - **Connections**: the tools you've connected and what each is for.
 - **Run Reviews**: one row per scheduled run, used for the digest.
 - **Archive**: finished tasks you've archived.
+
+**Repeating tasks:** say "every Monday" or "every 3 days" when you create one, and it puts itself back in the queue after each run.
 
 Add your own columns or tabs any time. Claude finds columns by name, so nothing breaks, and it never removes anything you added.
 
