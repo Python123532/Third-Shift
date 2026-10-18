@@ -2,93 +2,95 @@
 
 # Night Shift: a task queue for Claude
 
-A Claude skill that gives you a task queue across every chat. You hand Claude work, it gets done on a schedule while you're busy, progress is saved after every step, Claude rates its own work honestly, and you review it when you're back.
+Hand Claude work, and it gets done while you're offline. Night Shift keeps your tasks in a Google Sheet that every chat can see. Claude works through them on a schedule you pick, saves after every step, rates its own work honestly, and you review the results when you're back.
 
-The skill itself is small on purpose. It ships with only the core, and everything else is built around you as you use it: your schedule, what "good work" means to you, which of your tools it connects to, and any extra columns or tabs you want. Claude asks when something depends on you, saves the answer in your sheet, and follows it from then on.
+It starts small on purpose. Your schedule, what "good work" means to you, and which of your tools it uses are all set up by asking you, and saved in your sheet.
 
 ## Where it works well
 
-- **Work you don't want to babysit.** Research write-ups, document cleanups, code upkeep, anything that can be broken into steps. Claude saves after each step and picks up where it left off on the next run.
-- **Work spread across chats and devices.** Start a task on your phone, check it from your laptop. The sheet is the single source of truth.
-- **An honest feedback loop.** Claude rates its work 1-10 against the task's spec and your standards, says what to specify better next time, and you add your own rating. The gap between the two tells you whether to trust the self-ratings.
+- **Work you don't want to babysit.** Research write-ups, document cleanups, study guides, event plans, code upkeep: anything that can be broken into steps. Claude saves after each step and picks up where it left off on the next run.
+- **Work spread across chats and devices.** Add a task from your phone, check it from your laptop. The sheet is the one place everything lives.
+- **An honest feedback loop.** Claude rates its work 1–10 against what you asked for and says what to specify better next time. You add your own rating, and the gap tells you how far to trust its self-ratings.
 
-Less good for: anything that needs a person to click "send" or "buy" (it drafts those and waits for you), and quick one-off questions (just ask Claude normally).
+Not great for: anything that needs a person to click "send" or "buy" (it drafts those and waits for you), or quick one-off questions (just ask Claude normally).
 
 ## What you need
 
 - A Claude plan that includes skills and scheduled tasks.
-- The **Google Drive** and **Google Sheets** connectors (Settings > Connectors).
-- Optional: any other connectors you want it to use, and the Claude desktop app if you want it to work with files on your computer.
+- The **Google Drive** and **Google Sheets** connectors, turned on in **Settings > Connectors**.
+
+## Install
+
+**In the Claude app (most people):**
+1. Download [`dist/night-shift.zip`](dist/night-shift.zip) from this repo.
+2. In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload the zip.
+
+**In Claude Code:** run `/plugin install night-shift --marketplace Python123532/claude-task-manager`. This adds `/night-shift:` slash commands and a reviewer for second opinions, and updates itself.
+
+Use one or the other, not both.
+
+## Get started
+
+1. Open a new chat and type `TASK setup`.
+2. Claude shows you exactly what it will access (table below) and asks before creating anything.
+3. It makes a Google Sheet called **Task Manager**, asks when you're usually offline, and sets up the scheduled runs.
+4. Make sure push notifications are on for the first run of the day (setup turns them on; you can check in your scheduled tasks). That run ends by sending you a digest: what finished, what needs you, and what's stuck.
+5. Add your first task: `TASK create (what you want done)`.
 
 ## What it can access
 
 | Access | Used for |
 |---|---|
 | Google Sheets | One sheet named "Task Manager". No other sheets. |
-| Google Drive | Creates that sheet and a "Task Manager" folder; saves finished work there. Reads your 20 most recent file **titles** only if you say yes. |
-| Scheduled tasks | Runs at times you pick, while you're offline. |
+| Google Drive | Creates that sheet and a "Task Manager" folder, and saves finished work there. Reads the **titles** of your 20 most recent files only if you say yes during setup. |
+| Scheduled tasks | Runs at the times you pick, while you're offline. |
 | Memory | Only if you say yes: suggests a setup from what Claude already knows about you. |
 
-Runs never send, submit, buy, post, or delete anything. They draft it and wait for you. Other tools are added only when you ask, and Claude tells you exactly what it would read and write first.
+Runs never send messages, submit forms, buy anything, post publicly, or delete anything. They draft it and wait for you. Other tools (a notes app, a code repo, folders on your computer) are added only when you ask, and Claude tells you exactly what it would read and write first.
 
-## Setup
-
-1. Install it one of two ways:
-   - **As a plugin (Claude Code):** `/plugin install night-shift --marketplace Python123532/claude-task-manager`. You get the skill, `/night-shift:` slash commands, and a reviewer agent for second opinions, and it updates itself.
-   - **As a skill only:** run `scripts/build-skill-zip.sh` (or download the release zip), then in Claude go to **Settings > Skills**, choose **Upload a skill**, and upload `night-shift.zip`.
-2. Open a new chat and type `TASK setup` (or `/night-shift:setup`).
-3. Claude makes a Google Sheet called **Task Manager** in your Drive, asks (with your permission, and titles only) to look at your recent files so it can tailor itself to you, asks when you're offline, and sets up the scheduled runs. The first run each day ends by sending you a digest of everything since the last one, including that run's work.
-
-That's it. Standards and tool connections get set up the first time they come up, and you can change anything by just asking.
+Your sheet and tasks are yours alone. Nothing is shared with anyone else who uses Night Shift.
 
 ## Commands
 
-Type these at the start of a message. With the plugin, each also works as a slash command (`TASK queue` = `/night-shift:queue`). Anything else can be asked in plain words.
+Type these at the start of a message. Anything in parentheses is yours to fill in. You can also just ask in plain words.
 
 | Command | What it does |
 |---|---|
-| `TASK setup` | Makes your sheet, asks your schedule, sets up the runs. Re-run to change any of it. |
+| `TASK setup` | Makes your sheet, asks your schedule, sets up the runs. Run it again to change any of it. |
 | `TASK create (what)` | Builds a new task with you until it's clear enough to run without you. |
-| `TASK execute (id)` | Does a task now instead of waiting for a run. |
-| `TASK status (tag or id)` | Every task and where it stands, or one task's full history. |
-| `TASK queue` | What the next runs will work on, in order. |
-| `TASK review (id)` | See a finished task, rate it, approve it or send it back. No ID: a table of everything unrated; reply like `T-001 9, T-002 7` or `skip`. Add `check` after an ID for an independent second rating. |
+| `TASK execute (id)` | Does a task right now instead of waiting for a run. |
+| `TASK status` | Every task and where it stands. Add a tag or task ID to narrow it. |
+| `TASK queue` | What the next run will work on, in order. |
+| `TASK review` | A table of finished work to rate. Reply like `T-001 9, T-002 7`, or `skip`. With an ID: rate one task, then approve it or send it back. Add `check` after an ID for an independent second rating. |
 | `TASK edit (id) (change)` | Change anything: due date, priority, tag, pause, resume, delete, archive. |
-| `TASK split (id)` | Break a big task into smaller ones. |
-| `TASK digest` | What finished, what's stuck, what needs you. |
-| `TASK help` | The list. |
+| `TASK split (id)` | Break a big task into smaller ones, in order. |
+| `TASK digest` | What finished, what's in progress, what needs you, what's stuck. |
+| `TASK help` | This list. |
 
 ## The sheet
 
-It starts with three tabs: **Tasks** (13 columns), **Log**, and **__settings__** (your timezone, Offline Mode, and Run Times). Other tabs appear only when you need them:
+It starts with three tabs: **Tasks**, **Log** (every piece of work done), and **__settings__** (your timezone, offline hours, and run times). Other tabs appear only when needed:
 
-- **Standards**: what good work looks like, per tag. A researcher might want vetted sources and a lit review; an artist might want reference boards and thumbnails first. Claude asks the first time a tag has none.
-- **Connections**: the tools you've connected and what each is for. Claude asks how you want a tool used before using it.
+- **Standards**: what good work looks like for each kind of task. A researcher might want vetted sources; an artist might want three thumbnails before refining. Claude asks the first time a tag has none.
+- **Connections**: the tools you've connected and what each is for.
 - **Run Reviews**: one row per scheduled run, used for the digest.
 - **Archive**: finished tasks you've archived.
 
-Add your own columns or tabs any time. Claude finds columns by name, so it won't break, and it never removes anything you added.
+Add your own columns or tabs any time. Claude finds columns by name, so nothing breaks, and it never removes anything you added.
 
-The **Runs** column says how each task gets worked on: *Daily queue* (the scheduled runs pick it up), *Own schedule* (it has its own scheduled task, for example one that needs your computer), or *Manual only* (it waits for `TASK execute`).
+## If something comes up
 
-## If X happens
-
-- **My computer was off.** Anything that needed your computer gets noted in a Pending Sync column and done the next time it's reachable. Claude asks you once how you'd like that handled.
-- **A run hit something unclear.** It doesn't guess. The task goes to Needs review with the question in the Log, and it shows up in your digest.
-- **A task needs an email sent or a form submitted.** Unattended runs never send, submit, buy, post, or delete. They draft it and wait for you.
-- **The ratings look too generous.** Compare the Claude and You numbers in Ratings over a few tasks, and say so in `TASK review`.
-- **A task's files only exist inside one chat.** Scheduled runs start fresh and can't see them. Put the files in Drive, a connected tool, or a folder on your computer.
+- **A run hit something unclear.** It doesn't guess. The task goes to *Needs review* with the question in its Notes, and it shows up in your digest.
+- **A task needs an email sent or a form submitted.** Runs draft it and wait for you.
+- **A task needs your computer and it was off.** The work is noted and done the next time your computer is reachable. Claude asks you once how you'd like that handled.
+- **A task's files only exist inside one chat.** Scheduled runs start fresh and can't see them. Put the files in Google Drive or a connected tool.
+- **The ratings seem too generous.** Compare Claude's numbers with yours over a few tasks, and tell it in `TASK review`.
 
 ## What's in this repo
 
 | Path | What it is |
 |---|---|
-| `skills/night-shift/` | The skill: `SKILL.md` plus `plans/`, which load only when needed |
-| `commands/` | One slash command per `TASK` command |
-| `agents/reviewer.md` | The second-opinion reviewer for `TASK review (id) check` |
-| `.claude-plugin/` | Plugin and marketplace manifests |
-| `assets/` | The icon (`scripts/make_icon.py` draws it) |
-
-## Sharing
-
-Send people this repo (it must be public, or they must be added as collaborators, for the install line to work). Everyone gets their own sheet through `TASK setup`, so nobody's tasks or settings mix.
+| `dist/night-shift.zip` | The skill, ready to upload |
+| `skills/night-shift/` | The skill's source: `SKILL.md` plus `plans/`, which load only when needed |
+| `commands/`, `agents/`, `.claude-plugin/` | The Claude Code plugin: slash commands, the reviewer, and manifests |
+| `assets/`, `scripts/` | The icon and social card, and the scripts that draw them and build the zip |
