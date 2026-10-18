@@ -1,4 +1,4 @@
-<img src="assets/icon.png" width="96" alt="Night Shift icon: a sleepy pixel crescent moon over a night sea">
+<img src="assets/icon.png" width="96" alt="Night Shift icon: a small floating sleepy blob in a nightcap">
 
 # Night Shift: a task queue for Claude
 
