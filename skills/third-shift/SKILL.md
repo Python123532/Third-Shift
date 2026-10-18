@@ -61,7 +61,7 @@ A Google Sheet named exactly 'Task Manager' in the user's own Drive (search for 
 
 ## Standards
 
-The user defines good work, per Tag, in a Standards tab: Applies To ('All' or tags) and Standard (their words). A task follows 'All' rows, rows matching its Tag, and anything extra in its Spec. When the user corrects something that holds for the whole Tag, not just this task, ask in one line whether to save it as a Standard for that Tag.
+The user defines good work, per Tag, in a Standards tab: Applies To ('All' or tags) and Standard (their words). A task follows 'All' rows, rows matching its Tag, and anything extra in its Spec. When the user corrects something that holds for the whole Tag, not just this task, ask in one line whether to save it as a Standard for that Tag. Only cite a Standard that exists as a row in the sheet. If you decline or limit work for your own reasons, say so plainly; never attribute it to a Standard or the sheet.
 
 ## Timing and safety
 

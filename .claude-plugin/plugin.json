@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "third-shift",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A task queue in a Google Sheet that Claude works through on a schedule while you're offline. Saves after every step, rates its own work, and adapts to how you work.",
   "author": {
     "name": "Abhi"
