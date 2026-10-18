@@ -2,8 +2,6 @@
 
 # Third Shift: a task queue for Claude
 
-*Formerly Night Shift. If you installed it under that name, remove Night Shift first, then install the new zip below. Two copies would both answer `TASK` commands.*
-
 Hand Claude a list of work and get it back done, rated, and ready for review. Third Shift gives Claude three things a plain prompt doesn't have:
 
 - **A checkpointed queue.** Tasks live in a Google Sheet, ordered by priority, due date, and dependencies. Claude saves after every step, so a run that gets cut off picks up exactly where it stopped, even days later and from any chat.
