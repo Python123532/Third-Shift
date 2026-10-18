@@ -161,6 +161,7 @@ List the tasks the next scheduled run will work on, in the order it will take th
 - **With an ID:** show the task's output link, Ratings, and Notes as a reply, then ask for the user's 1 to 10 in plain words (not a choice card). Write it as the 'You' number in Ratings. Then ask: approve, or send back with notes?
   - **Approve:** keeps Last Status as Finished.
   - **Send back:** adds the user's notes as a new last milestone, sets Last Status to In progress, and clears the 'You' number.
+- **'TASK review (ID) check':** get an independent second rating. If a Night Shift reviewer agent is available, give it the sheet ID and task ID. If not, do the review yourself, reading only the task's Spec, Spec Doc, Standards, and output (not its Ratings, Notes, or Log). Show the result next to Claude's rating and add it to Notes as a line starting 'Check: N/10'. Don't change Ratings.
 - **If the task is Needs review because it's waiting on an answer:** save the user's answer in Notes and set Last Status to In progress (or Not started if no milestone is done), so the next run picks it up.
 - **With no ID:** show every Finished task whose Ratings shows 'You -' as one table in a reply: Task (ID and Name), Output (clickable link), Claude (number), Why not higher (one line from Notes). Ask the user to reply in plain words, for example 'T-001 9, T-002a 6', with an optional note after any number, or 'skip'. Don't use a choice card.
   - **A number:** write it as the 'You' number. A note goes in Notes as a line starting 'You:'.

@@ -1,3 +1,5 @@
+<img src="assets/icon.png" width="96" alt="Night Shift icon: a sleepy pixel crescent moon over a night sea">
+
 # Night Shift: a task queue for Claude
 
 A Claude skill that gives you a task queue across every chat. You hand Claude work, it gets done on a schedule while you're busy, progress is saved after every step, Claude rates its own work honestly, and you review it when you're back.
@@ -31,15 +33,17 @@ Runs never send, submit, buy, post, or delete anything. They draft it and wait f
 
 ## Setup
 
-1. Zip the `SKILL.md` file and the `plans` folder together (or download the release zip). In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload the zip.
-2. Open a new chat and type `TASK setup`.
+1. Install it one of two ways:
+   - **As a plugin (Claude Code):** `/plugin install night-shift --marketplace Python123532/claude-task-manager`. You get the skill, `/night-shift:` slash commands, and a reviewer agent for second opinions, and it updates itself.
+   - **As a skill only:** run `scripts/build-skill-zip.sh` (or download the release zip), then in Claude go to **Settings > Skills**, choose **Upload a skill**, and upload `night-shift.zip`.
+2. Open a new chat and type `TASK setup` (or `/night-shift:setup`).
 3. Claude makes a Google Sheet called **Task Manager** in your Drive, asks (with your permission, and titles only) to look at your recent files so it can tailor itself to you, asks when you're offline, and sets up the scheduled runs. The first run each day ends by sending you a digest of everything since the last one, including that run's work.
 
 That's it. Standards and tool connections get set up the first time they come up, and you can change anything by just asking.
 
 ## Commands
 
-Type these at the start of a message. Anything else can be asked in plain words.
+Type these at the start of a message. With the plugin, each also works as a slash command (`TASK queue` = `/night-shift:queue`). Anything else can be asked in plain words.
 
 | Command | What it does |
 |---|---|
@@ -48,7 +52,7 @@ Type these at the start of a message. Anything else can be asked in plain words.
 | `TASK execute (id)` | Does a task now instead of waiting for a run. |
 | `TASK status (tag or id)` | Every task and where it stands, or one task's full history. |
 | `TASK queue` | What the next runs will work on, in order. |
-| `TASK review (id)` | See a finished task, rate it, approve it or send it back. No ID: a table of everything unrated; reply like `T-001 9, T-002 7` or `skip`. |
+| `TASK review (id)` | See a finished task, rate it, approve it or send it back. No ID: a table of everything unrated; reply like `T-001 9, T-002 7` or `skip`. Add `check` after an ID for an independent second rating. |
 | `TASK edit (id) (change)` | Change anything: due date, priority, tag, pause, resume, delete, archive. |
 | `TASK split (id)` | Break a big task into smaller ones. |
 | `TASK digest` | What finished, what's stuck, what needs you. |
@@ -75,6 +79,16 @@ The **Runs** column says how each task gets worked on: *Daily queue* (the schedu
 - **The ratings look too generous.** Compare the Claude and You numbers in Ratings over a few tasks, and say so in `TASK review`.
 - **A task's files only exist inside one chat.** Scheduled runs start fresh and can't see them. Put the files in Drive, a connected tool, or a folder on your computer.
 
+## What's in this repo
+
+| Path | What it is |
+|---|---|
+| `skills/night-shift/` | The skill: `SKILL.md` plus `plans/`, which load only when needed |
+| `commands/` | One slash command per `TASK` command |
+| `agents/reviewer.md` | The second-opinion reviewer for `TASK review (id) check` |
+| `.claude-plugin/` | Plugin and marketplace manifests |
+| `assets/` | The icon (`scripts/make_icon.py` draws it) |
+
 ## Sharing
 
-Send people this repo. Everyone gets their own sheet through `TASK setup`, so nobody's tasks or settings mix.
+Send people this repo (it must be public, or they must be added as collaborators, for the install line to work). Everyone gets their own sheet through `TASK setup`, so nobody's tasks or settings mix.

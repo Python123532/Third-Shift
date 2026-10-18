@@ -1,0 +1,12 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "night-shift",
+  "version": "1.0.0",
+  "description": "A task queue in a Google Sheet that Claude works through on a schedule while you're offline. Saves after every step, rates its own work, and adapts to how you work.",
+  "author": {
+    "name": "Venkata",
+    "email": "tvnagalakshmi@gmail.com"
+  },
+  "repository": "https://github.com/Python123532/claude-task-manager",
+  "keywords": ["tasks", "queue", "scheduled", "google-sheets", "productivity"]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "night-shift",
+  "description": "Night Shift: a Google Sheet task queue Claude works through while you're offline.",
+  "owner": {
+    "name": "Venkata",
+    "email": "tvnagalakshmi@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "night-shift",
+      "source": "./",
+      "description": "A task queue in a Google Sheet that Claude works through on a schedule while you're offline.",
+      "version": "1.0.0"
+    }
+  ]
+}
