@@ -5,7 +5,7 @@ Read only these Tasks columns: ID, Last Status, Runs, Priority, Effort, Spec, Mi
 A task is in the queue only if:
 - Last Status is Not started or In progress,
 - Runs is Daily queue,
-- every ID in its Depends On is Finished,
+- every ID in its Depends On is Finished, and it has no outside wait (plain text in Depends On),
 - it isn't a parent (no other row uses its ID plus a letter), and
 - if it has a Repeat value, its Due is today or earlier.
 

@@ -45,7 +45,7 @@ A Google Sheet named exactly 'Task Manager' in the user's own Drive (search for 
 
 **__settings__:** Setting, Value, Notes. Core rows: **Timezone** (IANA name), **Offline Mode** ('h:mm AM - h:mm PM', when the user isn't using Claude; scheduled runs happen only inside it), **Run Times** (comma-separated; the first is the first run of Offline Mode). Read any other rows present.
 
-**Optional, added only when first needed:** Due column ('yyyy-mm-dd'), Depends On column (IDs), Sources column, Pending Sync column (plans/connections.md), Spec Doc column (Task rule 5), Repeat column (Task rule 8), Standards tab, Connections tab, Run Reviews tab (plans/scheduled-run.md), Archive tab (same columns as Tasks). If the sheet uses older column names, ask once whether to rename them.
+**Optional, added only when first needed:** Due column ('yyyy-mm-dd'), Depends On column (task IDs, or plain text for an outside wait such as 'SRC approval'), Sources column, Pending Sync column (plans/connections.md), Spec Doc column (Task rule 5), Repeat column (Task rule 8), Standards tab, Connections tab, Run Reviews tab (plans/scheduled-run.md), Archive tab (same columns as Tasks). If the sheet uses older column names, ask once whether to rename them.
 
 ### Task rules
 
@@ -54,13 +54,14 @@ A Google Sheet named exactly 'Task Manager' in the user's own Drive (search for 
 3. **After every change,** update Last Updated; after any work, add a Log row.
 4. **Output location:** if 'Output:' doesn't say where, make a Google Doc in a Drive folder 'Task Manager' (create it if needed) and link it in Output Link. Never leave the only copy in a chat.
 5. **Long specs:** over 500 characters, put the full text in a Google Doc '(ID) (Name) spec' in that folder, link it in Spec Doc, and rewrite the cell under 300 characters keeping all three lines.
-6. **Rating:** on finishing, write 'Claude N / You -'. Judge only against Spec and Standards; aim for 10, give what it earns. If __settings__ has a Rating Gap of +1 or more, you've been scoring higher than the user; score stricter. In Notes, a reason for every point below 10, then 'Tip:' with one thing to specify better. Never write the 'You' number.
+6. **Rating:** on finishing, write 'Claude N / You -'. Judge only against Spec and Standards; aim for 10, give what it earns. If __settings__ has a Rating Gap of +1 or more, you've been scoring higher than the user; score stricter. In Notes, a reason for every point below 10, then 'Tip:' with one thing to specify better. Never write the 'You' number. If the user later resolves a reason you took a point off for, re-rate and add 're-rated after your answer'.
 7. **Parents** (tasks split into lettered subtasks) are Finished when all subtasks are, aren't rated, and get the subtask links in Notes.
 8. **Repeating tasks** (Repeat: 'daily', 'weekly', or 'every N days'): when one finishes, rate it and log the output link as usual, then set Last Status to Not started, reset Milestones progress to 0, and set Due to today plus the interval. Ratings keeps the latest cycle.
+9. **Missing input:** if a file or answer the task needs can't be found, don't guess. Set Needs review, Notes first line 'Waiting on: (what)' plus how to give it ('upload it in a chat or paste its link', or the question).
 
 ## Standards
 
-The user defines good work, per Tag, in a Standards tab: Applies To ('All' or tags) and Standard (their words). A task follows 'All' rows, rows matching its Tag, and anything extra in its Spec.
+The user defines good work, per Tag, in a Standards tab: Applies To ('All' or tags) and Standard (their words). A task follows 'All' rows, rows matching its Tag, and anything extra in its Spec. When the user corrects something that holds for the whole Tag, not just this task, ask in one line whether to save it as a Standard for that Tag.
 
 ## Timing and safety
 
@@ -84,7 +85,7 @@ Read the file listed for a command before doing it. Read nothing else from plans
 | TASK doctor | plans/doctor.md |
 | TASK queue | List what the next scheduled run will work on, in order, with the reason for each, using plans/queue-rules.md. |
 | TASK status (Tag or ID, optional) | Nothing after it: each task as 'ID, Name, Last Status, progress, Output Link if Finished'. A Tag: only that Tag. An ID: its full row, its Log rows, and Sources. |
-| TASK edit (ID) (change) | Change what they say ('due Friday', 'priority low', 'depends on T-012'). pause: Paused. resume: In progress, or Not started if no milestone is done. delete: confirm first. archive: move the row to Archive. If it was In progress, add a Log row. 'TASK pause/resume/priority/due (ID) ...' work the same. |
+| TASK edit (ID) (change) | Change what they say ('due Friday', 'priority low', 'depends on T-012', 'waiting on SRC approval'; '(wait) done' removes it). pause: Paused. resume: In progress, or Not started if no milestone is done. delete: confirm first. archive: move the row to Archive. If it was In progress, add a Log row. 'TASK pause/resume/priority/due (ID) ...' work the same. |
 | TASK help | These commands, one line each, plus: anything else can be asked in plain words. |
 
 Scheduled runs: follow plans/scheduled-run.md.

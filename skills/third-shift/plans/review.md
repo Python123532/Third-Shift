@@ -9,5 +9,6 @@ Ratings are always asked in plain words, never with a choice card. Replies to a 
 - **With an ID:** show its output link, Ratings, and Notes in a reply, and ask for their 1 to 10. Write it as the 'You' number. Then ask: approve, or send back with notes?
   - **Approve:** stays Finished.
   - **Send back:** add their notes as a new last milestone, set In progress, clear the 'You' number.
+- **A note that changes the deliverable** (send back, answer, or resume): rewrite Spec 'Output:' (and 'What:' if needed) to match, and add 'Was: (old line)' to Notes.
 - **'TASK review (ID) check':** an independent second rating. If a Third Shift reviewer agent is available, give it the sheet ID and task ID. If not, review it yourself, reading only Spec, Spec Doc, Standards, and the output (not Ratings, Notes, or Log). Show the result beside Claude's rating and add 'Check: N/10' to Notes. Don't change Ratings.
 - **A task in Needs review waiting on an answer:** save their answer in Notes and set In progress (or Not started if no milestone is done) so the next run picks it up.
