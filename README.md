@@ -1,4 +1,4 @@
-# Task Manager for Claude
+# Night Shift: a task queue for Claude
 
 A Claude skill that gives you a task queue across every chat. You hand Claude work, it gets done on a schedule while you're busy, progress is saved after every step, Claude rates its own work honestly, and you review it when you're back.
 
@@ -20,9 +20,9 @@ Less good for: anything that needs a person to click "send" or "buy" (it drafts 
 
 ## Setup
 
-1. In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload `SKILL.md`.
+1. Zip the `SKILL.md` file and the `plans` folder together (or download the release zip). In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload the zip.
 2. Open a new chat and type `TASK setup`.
-3. Claude makes a Google Sheet called **Task Manager** in your Drive, asks when you're busy and when you use Claude yourself, and offers to set up the scheduled runs.
+3. Claude makes a Google Sheet called **Task Manager** in your Drive, asks (with your permission, and titles only) to look at your recent files so it can tailor itself to you, asks when you're offline, and sets up the scheduled runs. The first run each day also sends you a digest of everything since the last one.
 
 That's it. Standards and tool connections get set up the first time they come up, and you can change anything by just asking.
 
@@ -45,7 +45,7 @@ Type these at the start of a message. Anything else can be asked in plain words.
 
 ## The sheet
 
-It starts with three tabs: **Tasks**, **Log**, and **__settings__** (your answers to setup questions). Other tabs appear only when you need them:
+It starts with three tabs: **Tasks** (13 columns), **Log**, and **__settings__** (your timezone, Offline Mode, and Run Times). Other tabs appear only when you need them:
 
 - **Standards**: what good work looks like, per tag. A researcher might want vetted sources and a lit review; an artist might want reference boards and thumbnails first. Claude asks the first time a tag has none.
 - **Connections**: the tools you've connected and what each is for. Claude asks how you want a tool used before using it.
