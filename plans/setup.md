@@ -2,6 +2,24 @@
 
 Run by 'TASK setup'. Re-running it lets the user change any answer. Use clickable multiple-choice questions where possible, at most 4 questions per card.
 
+## 0. Say what Night Shift needs, before doing anything
+First check that the Google Drive and Google Sheets connectors are available. If either is missing, name it, say to add it in Settings > Connectors, and stop until they have.
+
+Then show this as a reply (not inside tool calls), and ask 'OK to go ahead?' with the answers 'Yes', 'No', and a question of their own:
+
+> **What Night Shift uses, and why**
+> | Access | What it does with it |
+> |---|---|
+> | Google Sheets | Reads and writes one sheet named 'Task Manager'. No other sheets. |
+> | Google Drive | Creates that sheet and a 'Task Manager' folder, and saves finished work there. Later I'll ask (separately) whether I can read the titles of your 20 most recent files. |
+> | Scheduled tasks | Runs at times you pick, while you're offline. Runs can act without asking you, within the limits below. |
+> | Memory | Only if you say yes later: read what Claude already knows about you, to suggest a setup. |
+>
+> **Never, in any run:** send messages or emails, submit forms, buy anything, post publicly, or delete anything. Those get drafted and wait for you.
+> Other tools (notes apps, repos, folders on your computer) are added only when you ask, and I'll say exactly what I'd read and write first.
+
+On 'No', stop and say that nothing was created.
+
 ## 1. Find or create the sheet
 Search the user's Drive for a spreadsheet named exactly 'Task Manager' that they own. Use an exact-title search (title equals 'Task Manager'), not a 'contains' search, which also matches files like 'Task Manager TEST' or 'Task Manager (old)'. If more than one exact match exists, ask which one.
 

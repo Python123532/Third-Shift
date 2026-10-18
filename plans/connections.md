@@ -8,6 +8,8 @@ The first time a tool comes up, ask the user, with clickable choices where possi
 2. What should Claude write to it? (nothing, a note per task, a log line after each run, the finished output, other)
 3. For which tags?
 
+Before saving, repeat the access back in one short table (Tool, Reads, Writes, Tags, Never: delete anything) and ask 'OK?'. If the tool is only on their computer, add that it works only when the computer is on and linked.
+
 Save the answer as a row in a Connections tab (create it if it doesn't exist) with these columns:
 - **Tool**
 - **Where:** a folder path, page, repo, or Drive folder

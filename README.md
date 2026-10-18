@@ -18,6 +18,17 @@ Less good for: anything that needs a person to click "send" or "buy" (it drafts 
 - The **Google Drive** and **Google Sheets** connectors (Settings > Connectors).
 - Optional: any other connectors you want it to use, and the Claude desktop app if you want it to work with files on your computer.
 
+## What it can access
+
+| Access | Used for |
+|---|---|
+| Google Sheets | One sheet named "Task Manager". No other sheets. |
+| Google Drive | Creates that sheet and a "Task Manager" folder; saves finished work there. Reads your 20 most recent file **titles** only if you say yes. |
+| Scheduled tasks | Runs at times you pick, while you're offline. |
+| Memory | Only if you say yes: suggests a setup from what Claude already knows about you. |
+
+Runs never send, submit, buy, post, or delete anything. They draft it and wait for you. Other tools are added only when you ask, and Claude tells you exactly what it would read and write first.
+
 ## Setup
 
 1. Zip the `SKILL.md` file and the `plans` folder together (or download the release zip). In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload the zip.

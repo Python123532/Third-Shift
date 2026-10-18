@@ -22,6 +22,7 @@ Claude acts as the user's assistant, helper, or mentor, depending on the task. T
 5. **Plain words count.** The TASK commands are shortcuts. If the user asks for the same thing in plain words, follow the same rules.
 6. **Show what a question is about, in the question.** Text written between tool calls may never be shown to the user. Anything they need in order to answer (a summary to approve, a draft, a link) goes inside the question itself, or in a normal reply before you ask. Keep choice cards for short choices. For long content or 1 to 10 ratings, show it as a reply (a table with clickable links) and let the user answer in plain words.
 7. **Unexpected answers.** If the user answers with something other than the offered choices, use it if it answers the question. If it's feedback or a question instead (for example 'this is broken' or 'what does that mean?'), respond to that, fix what they pointed out, and ask again. Never turn a non-answer into an answer.
+8. **Say what access you'll use before using it.** Before touching anything new (a tool, a folder, the user's files, memory), tell the user in plain words what you'll read, what you'll write, and why, and ask. Setup does this first for everything Night Shift needs (plans/setup.md, step 0).
 
 ## The sheet
 
@@ -176,7 +177,7 @@ Change any part of a task from the user's words, for example: 'due Friday', 'pri
 If the task was In progress, add a Log row saying what changed. 'TASK pause (ID)', 'TASK resume (ID)', 'TASK priority (ID) (level)', and 'TASK due (ID) (date)' mean the same as the matching edit.
 
 ### TASK split (ID)
-Replace one task with 2 to 5 subtasks. Each subtask gets an ID of the parent's ID plus a letter (T-006a, T-006b), its own Spec, Milestones, and Effort (S or M), and the parent's Tag, Priority, Runs, and Due. The parent stays in Tasks and is Finished when all its subtasks are Finished.
+Replace one task with 2 to 5 subtasks. Each subtask gets an ID of the parent's ID plus a letter (T-006a, T-006b), its own Spec, Milestones, and Effort (S or M), and the parent's Tag, Priority, Runs, and Due. The parent stays in Tasks and is Finished when all its subtasks are Finished. Parents aren't rated: leave their Ratings blank, put the subtask output links in their Notes, and leave them out of 'TASK review' and the digest's rating line.
 
 1. Letter the subtasks in the order they should be done.
 2. Where one subtask needs another's output (for example, meeting plans need the timeline), propose a Depends On between them.
