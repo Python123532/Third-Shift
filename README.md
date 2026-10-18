@@ -94,3 +94,7 @@ Add your own columns or tabs any time. Claude finds columns by name, so nothing 
 | `skills/night-shift/` | The skill's source: `SKILL.md` plus `plans/`, which load only when needed |
 | `commands/`, `agents/`, `.claude-plugin/` | The Claude Code plugin: slash commands, the reviewer, and manifests |
 | `assets/`, `scripts/` | The icon and social card, and the scripts that draw them and build the zip |
+
+## License
+
+MIT. Use it, change it, share it. See [LICENSE](LICENSE).
