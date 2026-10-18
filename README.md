@@ -27,9 +27,10 @@ Less good for: anything that needs a person to click "send" or "buy" (it drafts 
    - make a Google Sheet called **Task Manager** in your Drive (tabs and columns included),
    - list the connectors it can see, plus any Obsidian vaults or code folders on your computer if the desktop app is linked,
    - ask which ones to connect and what each one is for,
-   - ask a few preferences (below),
+   - ask your schedule (when you're busy, when you use Claude yourself, when the runs should happen), your writing voice, and a few preferences (below),
    - offer to set up the scheduled runs.
-4. Open `SKILL.md` and change the **Time** section to your own schedule. The one in the file is the author's (busy 2:30 AM to 8:00 PM Eastern).
+
+Nothing personal is hardcoded in the skill. Your answers go into the sheet, and you can change any of them later with `TASK settings`.
 
 ## Commands
 
@@ -37,7 +38,8 @@ Type these at the start of a message.
 
 | Command | What it does |
 |---|---|
-| `TASK setup` | First-run interview: connect tools, set preferences. Re-run any time. |
+| `TASK setup` | First-run interview: connect tools, set your schedule and preferences. Re-run any time. |
+| `TASK settings (name) (value)` | See or change a setting, e.g. `TASK settings Protected Time 9:00 PM`. Schedule changes update the scheduled runs too. |
 | `TASK create (what)` | Builds a new task with you, field by field, until it's clear enough to run alone. |
 | `TASK execute (id)` | Does a task now instead of waiting for a scheduled run. |
 | `TASK update (source)` | Reads what changed in your connected notes and refreshes Claude's context. Asks what to look for first. |
@@ -57,10 +59,13 @@ Type these at the start of a message.
 - **Tiebreak.** If a task was changed in the sheet and in your notes app between syncs, either the newest edit wins, or changes to sheet fields (status, priority, due date) made in your notes come back to you as proposals in `TASK review`.
 - **Write style.** Claude writes straight into your notes and folders, or keeps everything under a "Claude Log" heading so your own writing is never touched.
 - **Auto update.** Off (you run `TASK update` when you want), or every few days.
+- **Sync mode** (only if you connect Obsidian or a local folder). Your computer is always on, your vault is mirrored to GitHub/Drive/Dropbox, or neither.
 
 ## The sheet
 
 The tabs you'll read: **Tasks**, **Log**, **Run Reviews**, **Templates**, **Archive**, **Connections**.
+
+The **Runs** column says how each task gets worked on: *Daily queue* (the scheduled runs pick it up), *Own schedule* (it has its own scheduled task, for example one that needs your computer), or *Manual only* (it waits for you to run `TASK execute`).
 
 Each task also gets a workspace doc in your Drive folder `Task Manager/Tasks`, with a Spec tab, a Notes tab, and a tab for anything you make with `TASK build`. The finished deliverable stays separate and is linked from the sheet.
 
