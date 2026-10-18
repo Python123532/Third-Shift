@@ -62,7 +62,10 @@ Offer to create one scheduled task per Run Time. The first Run Time's task uses 
 
 - Leave push notifications off for these.
 
-## 6. Close
+## 6. Sample task (optional)
+Offer a 2-minute sample so the user sees a finished, rated result right away: 'Want to try a tiny sample task now? It takes about 2 minutes.' On yes, create it with them in one card (suggest something small from their Profile, such as 'five key terms from (a class they take), one line each'; Effort S, two milestones), run it now as in plans/execute.md, then ask for their rating as in plans/review.md. On no, skip.
+
+## 7. Close
 Tell the user, in four lines or fewer:
 - what was set up,
 - that Standards and tool connections get set up the first time they come up,

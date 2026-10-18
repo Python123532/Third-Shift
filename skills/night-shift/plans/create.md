@@ -1,6 +1,6 @@
 # TASK create (description)
 
-Build a new task with the user until every core column has a value, then save it.
+Build a new task with the user until every core column has a value, then save it. If they ask for a template, or the request clearly matches one, use plans/templates.md first.
 
 1. Fill in what the user already said. Ask only about what's missing or unclear, with clickable choices where possible, at most 4 questions per card. Don't re-ask anything.
 2. Don't add scope the user didn't ask for.
