@@ -45,8 +45,9 @@ Type these at the start of a message.
 | `TASK queue` | What the next scheduled runs will work on, in order. |
 | `TASK review (id)` | See a finished task, rate it, approve it or send it back. |
 | `TASK digest` | What finished, what's stuck, what needs you. |
-| `TASK edit`, `priority`, `due`, `tag`, `depends`, `split` | Change a task. |
-| `TASK pause`, `resume`, `archive`, `delete` | Manage a task. |
+| `TASK build (id) (what)` | Turns a task's notes into something new, like a summary or a product review. |
+| `TASK edit (id) (change)` | Change any field: priority, due date, tag, pause, resume. |
+| `TASK depends`, `split`, `archive`, `delete` | Manage a task. |
 | `TASK log`, `sources` | History and citations for a task. |
 | `TASK template (name)` | Save a task's structure to reuse. |
 | `TASK help` | The full list. |
@@ -61,11 +62,13 @@ Type these at the start of a message.
 
 The tabs you'll read: **Tasks**, **Log**, **Run Reviews**, **Templates**, **Archive**, **Connections**.
 
+Each task also gets a workspace doc in your Drive folder `Task Manager/Tasks`, with a Spec tab, a Notes tab, and a tab for anything you make with `TASK build`. The finished deliverable stays separate and is linked from the sheet.
+
 Tabs that start with `__` (`__settings__`, `__context__`, `__scanlog__`) are bookkeeping for Claude. You can ignore them. `__context__` holds a few lines per project summarizing your notes, so Claude reads those instead of your whole vault every time, and `__scanlog__` tracks which files changed so unchanged files are never re-read.
 
 ## If X happens
 
-- **My computer was asleep or the desktop app was closed.** Anything that needed your computer (Obsidian, local folders) is written into the task's **Pending Sync** column and done the next time your computer is reachable. Cloud tools like Notion and Drive aren't affected. A task that runs entirely on your computer just skips that run and logs it.
+- **My computer was asleep or the desktop app was closed.** Anything that needed your computer (Obsidian, local folders) is written into the task's **Pending Sync** column. How it gets cleared depends on the Sync Mode you picked in setup: a small daily check if your computer is always on, a cloud copy of your vault (Obsidian Git or a Drive/Dropbox folder) so no computer is needed, or the next time you use Claude on that computer. Cloud tools like Notion and Drive aren't affected. A task that runs entirely on your computer just skips that run and logs it.
 - **A connector isn't turned on.** That connection shows as Broken in the Connections tab. Turn the connector on in Settings, then run `TASK setup` again.
 - **I edited a task in my notes and in the sheet.** Your tiebreak setting decides. With "newest wins", the overwritten value is written to the Log so you can restore it from version history.
 - **A scheduled run hit something unclear.** It doesn't guess. The task goes to **Needs review** with the question in the Log, and it shows up in your digest.

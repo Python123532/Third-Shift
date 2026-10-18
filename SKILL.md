@@ -1,6 +1,6 @@
 ---
 name: task-manager
-description: Cross-chat task manager stored in a Google Sheet that also syncs with the user's other tools (Notion, Obsidian, GitHub, Google Drive). Use whenever a message starts with TASK (setup, update, status, help, create, execute, edit, delete, archive, pause, resume, split, priority, due, depends, queue, log, sources, review, digest, template, tag), or when asked to add, check, or work on a task in the Task Manager.
+description: Cross-chat task manager stored in a Google Sheet that also syncs with the user's other tools (Notion, Obsidian, GitHub, Google Drive). Use whenever a message starts with TASK (setup, update, status, help, create, execute, build, edit, delete, archive, split, depends, queue, log, sources, review, digest, template, and the edit shortcuts pause, resume, priority, due, tag), or when asked to add, check, or work on a task in the Task Manager.
 ---
 
 # Task Manager
@@ -48,11 +48,12 @@ The main tabs:
 16. Claude Rating (1-10)
 17. Notes (Claude's final comments on the product and why it got that rating)
 18. User Rating (1-10)
-19. User Comments (what I could do better next time so the prompt is clearer)
+19. Prompt Tips (Claude's notes on what I could specify better next time so the prompt is clearer)
 20. Revisions (how many times the task was sent back)
 21. Last Updated (date and time of the last change, so two chats don't overwrite each other with old info)
 22. Connections (which connected tools this task reads from and writes to, e.g. 'Obsidian: HydroCartridge; Drive')
 23. Pending Sync (writes that couldn't happen yet because a tool wasn't reachable, e.g. 'Obsidian: task note, output file'. Blank when everything is synced)
+24. Task Doc (link to the task's workspace doc, see 'Task Docs')
 
 **Log** (one row each time a task is worked on). Columns: Date, Task ID, Run Type (Manual or Scheduled), Milestone, What Was Done, Stopped At, Effort Used, Notes.
 
@@ -64,7 +65,7 @@ The main tabs:
 
 **Connections** (one row per tool I've connected). Columns: Tool, Where (vault/folder path, Notion page, repo, Drive folder), Reachable From (Cloud or Laptop only), Default For Tags, Write (what Claude puts there), Read (what Claude reads from it), Status (Verified, Unverified, Broken), Last Checked.
 
-**__settings__** (one row per preference, set by 'TASK setup'): Tiebreak (Newest edit wins, or Sheet fields need approval), Write Style (Direct, or Under a 'Claude Log' heading), Auto Update (Off, or every N days), Notes App (Notion, Obsidian, or none), Run Window, Timezone.
+**__settings__** (one row per preference, set by 'TASK setup'): Tiebreak (Newest edit wins, or Sheet fields need approval), Write Style (Direct, or Under a 'Claude Log' heading), Auto Update (Off, or every N days), Notes App (Notion, Obsidian, or none), Sync Mode (Always-on computer, Mirrored vault, or Manual; see 'Connections'), Run Window, Timezone.
 
 **__context__** (one row per project or source): Tag, Source, Summary (a few lines of the current state), Files Read, Last Refreshed. 'TASK execute' reads this first.
 
@@ -74,7 +75,7 @@ Rules for the sheet:
 - Before writing to a task's row, read it again and check 'Last Updated'. If it changed since the chat last read it, use the newer version instead of overwriting it.
 - Update 'Last Updated' every time a row changes, and add a row to Log every time work is done.
 - When a task is finished, Claude fills in 'Claude Rating' and 'Notes'. The rating is an objective 1-10 based on the task's own spec (did it meet the objective, the deliverable format, and the audience). Aim for a 10, but if that's not possible, rate what it actually deserves and explain every point taken off in Notes.
-- Claude also fills in 'User Comments' with what I could do better next time so the prompt is clearer. I can add to it myself.
+- Claude also fills in 'Prompt Tips' with what I could do better next time so the prompt is clearer. I can add to it myself.
 - 'User Rating' is only filled in by me, through 'TASK review ()'. Comparing it to 'Claude Rating' shows whether the ratings are being honest.
 
 ## Task Structure
@@ -94,6 +95,15 @@ Every task saved in the manager must have all of the following fields filled bef
 - Connections (filled in automatically from the tag's defaults in the Connections tab, and I can change it per task)
 - Status ('Not started', 'In progress (milestones done out of total)', 'Paused', 'Needs review', 'Finished (link)')
 - Log (date + what was done each time it was worked on)
+
+## Task Docs
+
+Every task gets one Google Doc as its workspace, kept in the Drive folder 'Task Manager/Tasks' and named after the task (e.g. 'T-004 RSI research doc'), linked in the Task Doc column. It has these tabs:
+- Spec: the full objective, deliverable, audience, research scope and milestones. The sheet's Objective cell stays 1-2 lines; anything longer lives here.
+- Notes: working notes from each piece of work, newest first (what was found, decisions made, open questions). The Log tab only gets one line pointing here.
+- Build tabs: anything made with 'TASK build ()', one tab each.
+
+The task doc is the workspace, not the deliverable. The finished output stays wherever the Deliverable column says (its own doc, an edited file, a notes app) and is linked in Output Link. For tasks whose notes app is connected, the task note there links to the task doc instead of copying it.
 
 ## Vernacular
 
@@ -123,7 +133,11 @@ The sheet is the master. Everything else (Notion, Obsidian, GitHub, Drive folder
 How each kind of tool is reached:
 - Cloud connectors (Notion, Google Drive, GitHub, and anything else in Claude's connector list) work from any chat and from the scheduled runs. Notion is the default notes app for new users because of this. If a Notion skill is available, follow it.
 - Laptop-only tools (an Obsidian vault, a local project folder) only work when the chat or run is linked to my computer and it's awake with the Claude desktop app open. An Obsidian vault is just a folder with a .obsidian folder inside, so it's read and written as plain markdown files.
-- If a write can't happen because the tool isn't reachable, don't skip it and don't fail the task. Write it into the task's Pending Sync column, and do it the next time that tool is reachable (any TASK command in a linked chat checks Pending Sync first and clears what it can).
+- If a write can't happen because the tool isn't reachable, don't skip it and don't fail the task. Write it into the task's Pending Sync column.
+- How Pending Sync gets cleared follows Sync Mode in __settings__ (chosen in 'TASK setup'):
+  - 'Always-on computer': a small daily scheduled task that requires my computer, set inside my busy window after the day's last queue run, so it runs once the day's tasks are done. It reads only the Pending Sync column first; if it's empty, it stops right away. Otherwise it does the pending writes and clears them. (The main scheduled runs stay cloud-only, so a computer that's off never costs a whole run.)
+  - 'Mirrored vault': my notes folder is also kept in a cloud copy (a private GitHub repo through the Obsidian Git plugin, or a Google Drive or Dropbox synced folder). Cloud runs write to the cloud copy and my notes app picks the changes up, so no computer is needed and Pending Sync stays empty.
+  - 'Manual': pending writes wait until I run any TASK command in a chat linked to my computer, which clears them first.
 
 What gets written, by default, for a task whose Connections include a notes app (each user can change this in 'TASK setup'):
 - A note for the task (name, objective, deliverable, milestones, status, link back to the sheet), created when the task is created and updated when it changes.
@@ -154,7 +168,7 @@ The first-run interview, and it can be re-run any time to add or change connecti
    - If something I'd probably want isn't connected (e.g. no Notion), say so and offer to suggest the connector.
 3. Show what was found as a checklist card and let me pick what to connect.
 4. For each one I picked, ask what it's for: which tags it's the default for, what Claude should write there (task notes, daily run logs, finished outputs, nothing), and what Claude should read from it (context for tasks, nothing).
-5. Ask my preferences: Tiebreak, Write Style, Auto Update (off, or every 3-4 days), my run window and timezone.
+5. Ask my preferences: Tiebreak, Write Style, Auto Update (off, or every 3-4 days), my run window and timezone. If I connected a laptop-only tool, also ask Sync Mode: is my computer on all the time (Always-on computer), is the notes folder mirrored to GitHub, Drive or Dropbox (Mirrored vault), or neither (Manual).
 6. Save everything to the Connections and __settings__ tabs, then check each connection with one harmless read and mark it Verified or Broken.
 7. Offer to set up the scheduled runs (and an Auto Update schedule if I picked one). Laptop-only connections need a scheduled task that requires my computer.
 End with a short summary of what's connected and what each one does.
@@ -181,7 +195,7 @@ This should function as an iterative back-and-forth between the user and Claude 
 - Ask only about fields that are actually missing or unclear, don't re-ask things I already said.
 - If the task is effort L, suggest how to split it before saving.
 - Fill in Connections from the tag's defaults in the Connections tab and show them, so I can add or remove tools for this task. Ask where the task's source files live if they aren't in a connected tool, since scheduled runs can only use what's connected.
-- After saving, do the writes the Connections call for (e.g. create the task's note), or put them in Pending Sync.
+- After saving, create the task doc (Spec tab filled in) and link it, then do the writes the Connections call for (e.g. create the task's note), or put them in Pending Sync.
 
 This TASK is designed to create a task that is then fitted into the greater task manager, and from there, dynamically incorporated into the system.
 
@@ -202,12 +216,17 @@ Every task executed should have a thorough research/literature review beforehand
 
 The second way is to execute tasks yourself during the scheduled runs, as outlined in the 'Time' section above. The same standards apply as well, except if something isn't clear during an unattended run, set the task to 'Needs review' with the question written in the log instead of guessing.
 
-Before starting either way, read the task's tag in __context__ for background, and check Pending Sync.
+Before starting either way, read the task's tag in __context__ for background, read the task doc's Spec and Notes tabs, and check Pending Sync. Add to the Notes tab after each piece of work.
 
 When a task finishes either way, fill in the rating columns as outlined in 'Google Sheet Setup', and do the writes its Connections call for (output into the project folder, task note updated, daily note log line), or put them in Pending Sync.
 
+### TASK build () (what)
+Turn what's already in a task's doc (Spec, Notes, earlier builds) into something new, e.g. 'TASK build T-004 product review' or 'TASK build T-002 one-page summary'. It reshapes existing material: no new research, no rating, no milestone. Put the result in a new tab of the task doc, or, if I ask for a specific kind of output (a deck, a doc to share, a page), make that and link it in the tab. Only run when I ask, never in a scheduled run.
+
 ### TASK edit () ()
-Change any field of an existing task (e.g. TASK edit T-014 due Friday). If the task was in progress, note what changed in the log.
+Change any field of an existing task, including its priority, due date, tag, or paused state. Examples: 'TASK edit T-014 due Friday', 'TASK edit T-014 priority low', 'TASK edit T-014 tag Makerspace', 'TASK edit T-014 pause' (keeps it out of the scheduled runs), 'TASK edit T-014 resume' (puts it back in the queue). If the task was in progress, note what changed in the log.
+
+Shortcuts still work and mean the same thing, but don't list them in 'TASK help': 'TASK priority () ()', 'TASK due () ()', 'TASK tag () ()', 'TASK pause ()', 'TASK resume ()'.
 
 ### TASK delete ()
 Remove a task from the manager. Ask me to confirm first.
@@ -215,20 +234,8 @@ Remove a task from the manager. Ask me to confirm first.
 ### TASK archive ()
 Move a finished task out of the main list so 'TASK status' stays short. Archived tasks can still be looked up.
 
-### TASK pause ()
-Keep a task out of the scheduled runs until I resume it.
-
-### TASK resume ()
-Put a paused task back in the queue.
-
 ### TASK split ()
 Break a task into smaller subtasks (e.g. T-014a, T-014b), each with its own effort and milestones. The original task becomes finished once all its subtasks are.
-
-### TASK priority () ()
-Set a task to high, med, or low.
-
-### TASK due () ()
-Set or change a task's due date.
 
 ### TASK depends () on ()
 Block a task from running until another task is finished.
@@ -243,13 +250,13 @@ Show everything that's been done on a task, when, and where it stopped.
 List every source used for a task with links, so I can check the research myself.
 
 ### TASK review ()
-Show the output of a task that's 'Needs review' or 'Finished', along with Claude's rating and notes. I give my own 1-10 rating, then either approve it, or send it back with notes, which become the next milestone (and add 1 to Revisions).
+Show the output of a task that's 'Needs review' or 'Finished', along with Claude's rating and notes. I give my own 1-10 rating, which goes into User Rating, then either approve it, or send it back with notes, which become the next milestone (and add 1 to Revisions). 'TASK review' with no ID lists every finished task that has no User Rating yet and asks for a 1-10 for each in one card.
 
 ### TASK digest
-A short summary ready for me at 8:00 P.M.: what finished, what's still in progress, what's stuck, and anything waiting on my approval. This is also made automatically at the end of the last scheduled run each day.
+A short summary ready for me at 8:00 P.M.: what finished, what's still in progress, what's stuck, and anything waiting on my approval. Build it from today's Run Reviews rows (and Tasks for current status), not by re-reading the whole Log. This is also made automatically at the end of the last scheduled run each day.
+
+Who records what, so nothing is summarized twice: Log is one row per task per piece of work (the raw record). Run Reviews is one row per scheduled run (the write-up of that run). The digest only shortens Run Reviews. End it with one line listing finished tasks that have no User Rating yet, asking for a 1-10 for each (I can reply with just the numbers, or use 'TASK review').
 
 ### TASK template ()
 Save a task's structure (deliverable, audience, tone, research scope, milestones) under a name so it can be reused, e.g. 'lit review' or 'outreach email'. 'TASK create () from ()' starts a new task from a saved template.
 
-### TASK tag () ()
-Add or change the project tag on a task.
