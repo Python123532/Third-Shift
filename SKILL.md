@@ -22,7 +22,7 @@ Claude acts as the user's assistant, helper or mentor, whichever the task needs.
 
 ## The sheet
 
-One Google Sheet called 'Task Manager' in the user's own Drive. To find it, search Drive for a spreadsheet with that title that they own. Read the Tasks tab and the settings tab before acting on any TASK command. If there's no sheet, run 'TASK setup'.
+One Google Sheet called 'Task Manager' in the user's own Drive. To find it, search Drive for a spreadsheet with that title that they own. Read the Tasks tab and the __settings__ tab before acting on any TASK command. If there's no sheet, run 'TASK setup'.
 
 Core tabs, created by 'TASK setup':
 - **Tasks**, one row per task. Core columns: ID, Name, Tag, Priority (High, Med, Low), Due, Effort (S, M, L), Objective, Deliverable, Audience & Tone, Milestones (e.g. '2/4 - draft done'), Depends On, Last Status (Not started, In progress, Paused, Needs review, Finished), Runs (Daily queue, Own schedule, Manual only), Output Link, Claude Rating, Notes, User Rating, Last Updated.
@@ -32,9 +32,12 @@ Core tabs, created by 'TASK setup':
 Tabs that get added only when first needed: **Standards** (see below), **Connections** (see below), **Run Reviews** (one row per scheduled run, made by the first scheduled run), **Archive** (made by the first archive), and anything else the user asks for.
 
 Rules:
+- IDs: a new task gets the next unused number (T-001, T-002, and so on, checking Archive too). Subtasks add a letter to the parent's ID (T-006a, T-006b).
+- Timestamps (Last Updated, Log dates) are written as yyyy-mm-dd hh:mm in the user's timezone from __settings__.
+- Output: if the Deliverable doesn't say where the result goes, make a Google Doc in a Drive folder called 'Task Manager' (create it if needed) and put its link in Output Link. Never leave the only copy of an output inside a chat.
 - Before writing to a task's row, read it again and check Last Updated. If it changed since you read it, work from the newer version instead of overwriting it. Update Last Updated on every change and add a Log row whenever work is done.
 - Runs decides how a task gets worked on: Daily queue is picked up by the scheduled runs, Own schedule has its own scheduled task (for example one that needs the user's computer), Manual only waits for 'TASK execute'. Run rules live only in this column, never in Notes.
-- When a task finishes, fill Claude Rating with an honest 1-10 against the task's own spec (objective, deliverable, audience, and its Standards). Aim for 10, rate what it deserves, and explain every point taken off in Notes. Add a short tip on what the user could specify better next time. Never fill User Rating; only the user does, through 'TASK review'.
+- When a task finishes, fill Claude Rating with an honest 1-10 against the task's own spec (objective, deliverable, audience, and its Standards). Aim for 10, rate what it deserves, and explain every point taken off in Notes. End Notes with a line starting 'Tip:' on what the user could specify better next time. Never fill User Rating; only the user does, through 'TASK review'.
 - If an Objective gets too long to read in a cell (more than a few lines), offer to move the full spec into a Google Doc for that task and link it, keeping 1-2 lines in the cell.
 
 ## Standards
@@ -47,11 +50,7 @@ The first time a task is created for a tag with no standards, ask the user what 
 
 ## Connections
 
-The user's other tools (notes apps, code repos, cloud folders, anything in Claude's connector list or on their computer) are connected only when they want them to be.
-
-- When a task could use a tool the user has, or they mention one, ask how they want it used: what Claude should read from it, what to write to it, for which tags. Save the answer as a row in a **Connections** tab (Tool, Where, Purpose, Reachable From) and follow it. Work out how to do it from the tool itself; there's no fixed protocol per app.
-- Tools that need the user's computer only work when a chat or run is linked to it and the computer is awake. If such a write can't happen, don't skip it and don't fail the task: add a **Pending Sync** column if there isn't one, note the write there, and do it the next time the computer is reachable. Ask the user once how they'd like pending writes cleared (for example a small daily check if their computer is always on, or at the start of their next linked chat) and save it in __settings__.
-- Never delete anything in a connected tool.
+The user's other tools are connected only when they want them to be. When a task could use one of their tools, or they mention one, follow [plans/connections.md](plans/connections.md): ask how they want it used, save it in a Connections tab, and queue writes that need their computer in Pending Sync. Never delete anything in a connected tool.
 
 ## Time
 
@@ -59,16 +58,12 @@ Scheduled runs use the user's usage while they're busy, so ask in 'TASK setup' w
 
 Claude can't see how much usage is left, so tasks are sized by effort: S finishes in one run, M gets at most one milestone per run, L must be split ('TASK split') before it can run unattended. Save after every milestone so a cut-off run loses nothing; the next run picks up from the last saved milestone.
 
-## Scheduled Run plan
+## Plans
 
-What every scheduled run does. Nobody is watching, so never stop to ask: if something is unclear, write the question in the Log, set the task to Needs review, and move on.
-1. Find the sheet. Read Tasks, __settings__, Standards and Connections if they exist. If the sheet can't be reached, stop and say so.
-2. Build the queue: Last Status Not started or In progress, and Runs is Daily queue. Skip tasks whose Depends On aren't all Finished, and parent tasks that already have subtasks. Set to Needs review, with a Log note, any task missing Objective, Deliverable, Audience & Tone or Milestones, and any unsplit L task. Order by Priority, then earliest Due (blank last).
-3. Work the queue with 'TASK execute' standards: S finishes, M gets one milestone. Respect the user's protected time.
-4. After every milestone: follow the Last Updated rule, update Milestones, Last Status and Last Updated, add a Log row (Run Type Scheduled), and do the task's Connections writes or note them in Pending Sync.
-5. When a task finishes, rate it as described under 'The sheet'.
-6. Add one row to Run Reviews for this run (create the tab if needed): Date, Run, Tasks Worked, Milestones Done, Output Links, What Met the Spec, Problems or Gaps, Facts to Double-Check, Claude Rating, Why That Rating, Your Notes (left for the user). Add it even if nothing ran, and say why.
-7. If this is the last run of the day, end with 'TASK digest'.
+Longer procedures live in their own files and are only read when needed:
+- [plans/scheduled-run.md](plans/scheduled-run.md): what every scheduled run does. Read it at the start of any scheduled run.
+- [plans/setup.md](plans/setup.md): the first-run interview. Read it for 'TASK setup'.
+- [plans/connections.md](plans/connections.md): how to connect and use the user's other tools. Read it when a task involves one.
 
 ## Safety
 
@@ -78,7 +73,7 @@ What every scheduled run does. Nobody is watching, so never stop to ask: if some
 ## Commands
 
 ### TASK setup
-First-run interview, with clickable multiple-choice questions where possible (at most 4 per card). Find or create the sheet with the core tabs and columns. Ask only what the core needs: their timezone, when they're busy (when runs may happen), when they use Claude themselves, and what times they'd like the runs. Save the answers in __settings__, then offer to create the scheduled runs, each one telling Claude to load this skill and follow the Scheduled Run plan. Mention that standards and tool connections get set up as they come up, and that anything can be changed by just asking. Re-running it lets the user change any of this.
+Follow [plans/setup.md](plans/setup.md).
 
 ### TASK create ()
 Build a new task through back-and-forth until every core field is clear enough to run without them: Objective, Deliverable, Audience & Tone, Tag, Priority, Due, Effort, Milestones (2-5 steps), Depends On, Runs.
@@ -90,7 +85,7 @@ Build a new task through back-and-forth until every core field is clear enough t
 - If it's Effort L, suggest how to split it before saving.
 
 ### TASK execute ()
-Do a task now. Make sure the objective, scope, deliverable, audience and format are explicit; if any part isn't clear, ask about exactly that part. Follow the task's Standards. Keep every source used so it can be listed later. Save after each milestone, then rate it when it's finished. Scheduled runs do the same thing through the Scheduled Run plan, except they log questions instead of asking.
+Do a task now. Make sure the objective, scope, deliverable, audience and format are explicit; if any part isn't clear, ask about exactly that part. Follow the task's Standards. List every source used in a Sources column (add it the first time a task has sources), as links where possible. Save after each milestone, then rate it when it's finished. Scheduled runs do the same thing through [plans/scheduled-run.md](plans/scheduled-run.md), except they log questions instead of asking. If something fails partway, save what's done, say what failed, and leave the task in a state the next attempt can pick up from.
 
 ### TASK status (optional tag or ID)
 Every task with its status (Not started, In progress with milestones done out of total, Paused, Needs review, Finished with its output link), filtered by tag if given. With a task ID: that task's full row, its Log history, and its sources.
@@ -99,7 +94,7 @@ Every task with its status (Not started, In progress with milestones done out of
 The order the next scheduled runs will work in, and why (priority, due date, dependencies, Runs).
 
 ### TASK review (optional ID)
-Show a Needs review or Finished task's output with Claude's rating and notes. The user gives their own 1-10 (saved to User Rating), then approves it or sends it back with notes, which become the next milestone. With no ID: list finished tasks with no User Rating and ask for a 1-10 for each in one card.
+Show a Needs review or Finished task's output with Claude's rating and notes. The user gives their own 1-10 (saved to User Rating), then approves it or sends it back with notes, which become the next milestone. For a Needs review task waiting on an answer, save the user's answer in Notes and set Last Status back to In progress (or Not started if no milestone is done yet), so the next run picks it up. With no ID: list finished tasks with no User Rating and ask for a 1-10 for each in one card.
 
 ### TASK edit () ()
 Change anything about a task in plain words: 'TASK edit T-014 due Friday', 'priority low', 'tag Art', 'pause', 'resume', 'depends on T-012', 'delete' (confirm first), 'archive' (moves it to the Archive tab). Note in the Log what changed if the task was in progress. Shortcuts like 'TASK pause ()' or 'TASK priority () ()' mean the same thing.
