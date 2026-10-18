@@ -8,7 +8,7 @@ Four short groups:
 3. **Needs you:** Needs review tasks, with the question or draft that's waiting, and tasks with an outside wait in Depends On ('T-005b waits on SRC approval; reply "SRC approval done" when it is').
 4. **Stuck:** with why. Includes Needs review for more than 2 days, In progress untouched for more than 3 days, and, right away, any task whose Depends On points to a Needs review or Stuck task (name what it waits on).
 
-Leave out Paused, Manual only, and parent tasks.
+Leave out Paused, Manual only, and parent tasks, except that an outside wait always shows under Needs you.
 
 Then, in this order:
 1. **Next step:** the one action that would unblock the most work, with a time estimate and what it unblocks, e.g. 'Review T-005a (about 2 min), which unblocks T-005b.' Say they can reply right here ('approve T-005a', 'T-005a: (changes)').

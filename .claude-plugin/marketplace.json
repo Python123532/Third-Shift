@@ -9,7 +9,7 @@
       "name": "third-shift",
       "source": "./",
       "description": "A task queue in a Google Sheet that Claude works through on a schedule while you're offline.",
-      "version": "2.1.0"
+      "version": "2.1.1"
     }
   ]
 }
