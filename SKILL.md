@@ -20,6 +20,8 @@ Claude acts as the user's assistant, helper, or mentor, depending on the task. T
 3. **Find columns by header name.** Never assume a column's position.
 4. **The sheet is the only record.** Never keep task state only inside a chat. If the sheet can't be reached, tell the user and stop. Do not keep a list anywhere else.
 5. **Plain words count.** The TASK commands are shortcuts. If the user asks for the same thing in plain words, follow the same rules.
+6. **Show what a question is about, in the question.** Text written between tool calls may never be shown to the user. Anything they need in order to answer (a summary to approve, a draft, a link) goes inside the question itself, or in a normal reply before you ask. Keep choice cards for short choices. For long content or 1 to 10 ratings, show it as a reply (a table with clickable links) and let the user answer in plain words.
+7. **Unexpected answers.** If the user answers with something other than the offered choices, use it if it answers the question. If it's feedback or a question instead (for example 'this is broken' or 'what does that mean?'), respond to that, fix what they pointed out, and ask again. Never turn a non-answer into an answer.
 
 ## The sheet
 
@@ -40,7 +42,7 @@ Before acting on any TASK command, read the Tasks tab and the __settings__ tab.
 | Milestones | The progress line, then the numbered steps: '1/3 - outline done. 1) outline 2) draft 3) polish'. A task has 2 to 5 steps. |
 | Last Status | One of: Not started, In progress, Paused, Needs review, Finished. |
 | Output Link | A link to the finished output. |
-| Ratings | 'Claude N / You M', each a whole number from 1 to 10. Before the user rates, it reads 'Claude N / You -'. |
+| Ratings | 'Claude N / You M', each a whole number from 1 to 10. Before the user rates, it reads 'Claude N / You -'. If the user skips rating, it reads 'Claude N / You skip'. |
 | Notes | Claude's explanation of its rating, questions waiting on the user, and a final line starting 'Tip:'. |
 | Priority | One of: High, Med, Low. Default: Med. |
 | Effort | One of: S, M, L. S finishes in one run. M has 2 to 5 milestones and gets at most one milestone per run. L must be split with 'TASK split' before a scheduled run will work on it. |
@@ -102,7 +104,7 @@ Tools are connected only when the user wants them connected. When a task could u
 
 ## Timing
 
-1. Scheduled runs happen only inside Offline Mode.
+1. Scheduled runs happen only inside Offline Mode. A run that starts outside it does no task work (see plans/scheduled-run.md, step 2).
 2. Don't start a new milestone if less than 60 minutes remain before Offline Mode ends. Save and stop at the last finished step.
 3. Claude can't see how much usage is left, so work is sized by Effort (see the Tasks columns). Save after every milestone, so a run that gets cut off loses nothing. The next run continues from the last saved milestone.
 
@@ -128,11 +130,12 @@ Build a new task with the user until every core column has a value. Then save it
 1. Fill in what the user already said. Ask only about what's missing or unclear, using clickable choices where possible, at most 4 questions per card. Don't re-ask anything they've said.
 2. Don't add scope the user didn't ask for.
 3. Write Spec as the three labeled lines, and Milestones as 2 to 5 numbered steps.
-4. If Effort is L, propose a split into subtasks before saving.
-5. Show which Standards will apply. If the Tag has none, follow 'Standards'.
-6. If one of the user's tools would help, follow plans/connections.md.
-7. If the task's source files are somewhere a scheduled run can't reach (inside a chat, or only on a computer that isn't connected), tell the user and ask where to put them.
-8. Save the row with Last Status 'Not started', Ratings blank, and Runs 'Daily queue' unless the user chose otherwise. Then show the saved row.
+4. If the work is for an event, test, meeting, or other dated thing, ask for both dates unless the user gave both: when the event is, and when the output is due. Suggest a Due 3 days before the event. Put the event date in Spec's 'What:' line and the due date in the Due column. Never use the event date as Due without asking.
+5. If Effort is L, propose a split into subtasks before saving (see 'TASK split').
+6. Show which Standards will apply. If the Tag has none, follow 'Standards'.
+7. If one of the user's tools would help, follow plans/connections.md.
+8. If the task's source files are somewhere a scheduled run can't reach (inside a chat, or only on a computer that isn't connected), tell the user and ask where to put them.
+9. Save the row with Last Status 'Not started', Ratings blank, and Runs 'Daily queue' unless the user chose otherwise. Then show the saved row.
 
 ### TASK execute (ID)
 Do the task now.
@@ -154,11 +157,14 @@ Scheduled runs do the same work through plans/scheduled-run.md, except they writ
 List the tasks the next scheduled run will work on, in the order it will take them, with the reason for each (Priority, Due, Depends On, Runs, Effort), using the queue rules in plans/scheduled-run.md.
 
 ### TASK review (ID, optional)
-- **With an ID:** show the task's output, Ratings, and Notes, then ask for the user's 1 to 10. Write it as the 'You' number in Ratings. Then ask: approve, or send back with notes?
+- **With an ID:** show the task's output link, Ratings, and Notes as a reply, then ask for the user's 1 to 10 in plain words (not a choice card). Write it as the 'You' number in Ratings. Then ask: approve, or send back with notes?
   - **Approve:** keeps Last Status as Finished.
   - **Send back:** adds the user's notes as a new last milestone, sets Last Status to In progress, and clears the 'You' number.
 - **If the task is Needs review because it's waiting on an answer:** save the user's answer in Notes and set Last Status to In progress (or Not started if no milestone is done), so the next run picks it up.
-- **With no ID:** list every Finished task whose Ratings still shows 'You -' and ask for a 1 to 10 for each in one card.
+- **With no ID:** show every Finished task whose Ratings shows 'You -' as one table in a reply: Task (ID and Name), Output (clickable link), Claude (number), Why not higher (one line from Notes). Ask the user to reply in plain words, for example 'T-001 9, T-002a 6', with an optional note after any number, or 'skip'. Don't use a choice card.
+  - **A number:** write it as the 'You' number. A note goes in Notes as a line starting 'You:'.
+  - **skip** (for one task, or for all): write 'You skip'. This command and the digest stop asking about that task; 'TASK review (ID)' can still rate it.
+  - **No tasks to rate:** say so in one line.
 
 ### TASK edit (ID) (change)
 Change any part of a task from the user's words, for example: 'due Friday', 'priority low', 'tag Art', 'pause', 'resume', 'depends on T-012', 'delete', 'archive'.
@@ -170,16 +176,21 @@ Change any part of a task from the user's words, for example: 'due Friday', 'pri
 If the task was In progress, add a Log row saying what changed. 'TASK pause (ID)', 'TASK resume (ID)', 'TASK priority (ID) (level)', and 'TASK due (ID) (date)' mean the same as the matching edit.
 
 ### TASK split (ID)
-Replace one task with 2 to 5 subtasks. Each subtask gets an ID of the parent's ID plus a letter (T-006a, T-006b), its own Spec, Milestones, and Effort (S or M), and the parent's Tag, Priority, and Runs. The parent stays in Tasks and is Finished when all its subtasks are Finished.
+Replace one task with 2 to 5 subtasks. Each subtask gets an ID of the parent's ID plus a letter (T-006a, T-006b), its own Spec, Milestones, and Effort (S or M), and the parent's Tag, Priority, Runs, and Due. The parent stays in Tasks and is Finished when all its subtasks are Finished.
+
+1. Letter the subtasks in the order they should be done.
+2. Where one subtask needs another's output (for example, meeting plans need the timeline), propose a Depends On between them.
+3. Show the subtasks, their order, and the proposed dependencies together, and ask the user to confirm or change them before saving.
+4. Save confirmed dependencies in the Depends On column (add it if it isn't there).
 
 ### TASK digest
 A summary of everything since the last digest, in four short groups:
 1. Finished, with Output Link and Ratings.
 2. In progress, with milestone progress.
 3. Needs review, with the question or draft that's waiting.
-4. Stuck, with why.
+4. Stuck, with why. This includes, right away, any task whose Depends On points to a task that is Needs review or Stuck, named with the task it waits on.
 
-Build it from the Run Reviews rows and the Tasks tab, not by re-reading the whole Log. End with one line listing Finished tasks whose Ratings show 'You -', asking for a 1 to 10 for each. The first scheduled run of each Offline Mode also writes this digest (see plans/scheduled-run.md).
+Leave out Paused and Manual only tasks; they aren't waiting on anything. Build it from the Run Reviews rows and the Tasks tab, not by re-reading the whole Log. Put task links inside the Finished group. End with one line listing Finished tasks whose Ratings show 'You -' (not 'You skip') and saying 'Reply TASK review to rate them.' The first scheduled run of each Offline Mode also writes this digest, at the end of the run, so it includes that run's work (see plans/scheduled-run.md).
 
 ### TASK help
 List these commands with one line each, and say that anything else can be asked in plain words.

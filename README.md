@@ -22,7 +22,7 @@ Less good for: anything that needs a person to click "send" or "buy" (it drafts 
 
 1. Zip the `SKILL.md` file and the `plans` folder together (or download the release zip). In Claude, go to **Settings > Skills**, choose **Upload a skill**, and upload the zip.
 2. Open a new chat and type `TASK setup`.
-3. Claude makes a Google Sheet called **Task Manager** in your Drive, asks (with your permission, and titles only) to look at your recent files so it can tailor itself to you, asks when you're offline, and sets up the scheduled runs. The first run each day also sends you a digest of everything since the last one.
+3. Claude makes a Google Sheet called **Task Manager** in your Drive, asks (with your permission, and titles only) to look at your recent files so it can tailor itself to you, asks when you're offline, and sets up the scheduled runs. The first run each day ends by sending you a digest of everything since the last one, including that run's work.
 
 That's it. Standards and tool connections get set up the first time they come up, and you can change anything by just asking.
 
@@ -37,7 +37,7 @@ Type these at the start of a message. Anything else can be asked in plain words.
 | `TASK execute (id)` | Does a task now instead of waiting for a run. |
 | `TASK status (tag or id)` | Every task and where it stands, or one task's full history. |
 | `TASK queue` | What the next runs will work on, in order. |
-| `TASK review (id)` | See a finished task, rate it, approve it or send it back. No ID: rate everything still unrated. |
+| `TASK review (id)` | See a finished task, rate it, approve it or send it back. No ID: a table of everything unrated; reply like `T-001 9, T-002 7` or `skip`. |
 | `TASK edit (id) (change)` | Change anything: due date, priority, tag, pause, resume, delete, archive. |
 | `TASK split (id)` | Break a big task into smaller ones. |
 | `TASK digest` | What finished, what's stuck, what needs you. |
@@ -61,7 +61,7 @@ The **Runs** column says how each task gets worked on: *Daily queue* (the schedu
 - **My computer was off.** Anything that needed your computer gets noted in a Pending Sync column and done the next time it's reachable. Claude asks you once how you'd like that handled.
 - **A run hit something unclear.** It doesn't guess. The task goes to Needs review with the question in the Log, and it shows up in your digest.
 - **A task needs an email sent or a form submitted.** Unattended runs never send, submit, buy, post, or delete. They draft it and wait for you.
-- **The ratings look too generous.** Compare Claude Rating with your User Rating over a few tasks, and say so in `TASK review`.
+- **The ratings look too generous.** Compare the Claude and You numbers in Ratings over a few tasks, and say so in `TASK review`.
 - **A task's files only exist inside one chat.** Scheduled runs start fresh and can't see them. Put the files in Drive, a connected tool, or a folder on your computer.
 
 ## Sharing
