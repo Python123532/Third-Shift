@@ -2,7 +2,7 @@
   "name": "night-shift",
   "description": "Night Shift: a Google Sheet task queue Claude works through while you're offline.",
   "owner": {
-    "name": "Venkata"
+    "name": "Abhi"
   },
   "plugins": [
     {

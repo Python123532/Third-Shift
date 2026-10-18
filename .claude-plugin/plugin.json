@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "A task queue in a Google Sheet that Claude works through on a schedule while you're offline. Saves after every step, rates its own work, and adapts to how you work.",
   "author": {
-    "name": "Venkata"
+    "name": "Abhi"
   },
   "repository": "https://github.com/Python123532/claude-task-manager",
   "license": "MIT",
