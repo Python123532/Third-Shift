@@ -181,7 +181,7 @@ What every morning and afternoon scheduled run does. Nobody is watching, so neve
 Follow Safety the whole time.
 
 ### Sync plan
-Clears Pending Sync. Used by the daily sync task (Sync Mode 'Always-on computer') and at the start of any TASK command in a chat linked to my computer.
+Clears Pending Sync. Used by the daily sync task when Sync Mode is 'Always-on computer', and at the start of a TASK command in a chat linked to my computer only when Sync Mode is 'Manual' (so it doesn't use my own Claude time otherwise).
 1. Read only the Pending Sync column. If it's empty everywhere, stop.
 2. For each pending item, do the write if the tool is reachable now, then remove it from Pending Sync and add a Log line. Leave anything still unreachable.
 
@@ -278,9 +278,9 @@ List every source used for a task with links, so I can check the research myself
 Show the output of a task that's 'Needs review' or 'Finished', along with Claude's rating and notes. I give my own 1-10 rating, which goes into User Rating, then either approve it, or send it back with notes, which become the next milestone (and add 1 to Revisions). 'TASK review' with no ID lists every finished task that has no User Rating yet and asks for a 1-10 for each in one card.
 
 ### TASK digest
-A short summary ready for me when my Protected Time starts: what finished, what's still in progress, what's stuck, and anything waiting on my approval. Build it from today's Run Reviews rows (and Tasks for current status), not by re-reading the whole Log. This is also made automatically at the end of the last scheduled run each day.
+A short summary ready for me when my Protected Time starts: what finished, what's still in progress, what's stuck, and anything waiting on my approval. Build it from today's Run Reviews rows (and Tasks for current status), not by re-reading the whole Log. This is also made automatically at the end of the last scheduled run each day. End it with one line listing finished tasks that have no User Rating yet, asking for a 1-10 for each (I can reply with just the numbers, or use 'TASK review').
 
-Who records what, so nothing is summarized twice: Log is one row per task per piece of work (the raw record). Run Reviews is one row per scheduled run (the write-up of that run). The digest only shortens Run Reviews. End it with one line listing finished tasks that have no User Rating yet, asking for a 1-10 for each (I can reply with just the numbers, or use 'TASK review').
+Who records what, so nothing is summarized twice: Log is one row per task per piece of work (the raw record). Run Reviews is one row per scheduled run (the write-up of that run). The digest only shortens Run Reviews.
 
 ### TASK template ()
 Save a task's structure (deliverable, audience, tone, research scope, milestones) under a name so it can be reused, e.g. 'lit review' or 'outreach email'. 'TASK create () from ()' starts a new task from a saved template.
