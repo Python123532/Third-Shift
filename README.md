@@ -51,7 +51,7 @@ Not great for: anything that needs a person to click "send" or "buy" (it drafts 
 
 **Skill only:** if your Claude doesn't offer plugin uploads, download [`dist/third-shift.zip`](dist/third-shift.zip) and upload it in **Settings > Skills**. Everything works except the second-opinion reviewer.
 
-**Claude Code:** `/plugin marketplace add Python123532/claude-task-manager`, then `/plugin install third-shift@third-shift`. Get updates with `/plugin marketplace update third-shift`.
+**Claude Code:** `/plugin marketplace add Python123532/Third-Shift`, then `/plugin install third-shift@third-shift`. Get updates with `/plugin marketplace update third-shift`.
 
 Install one of these, not two: two copies would both answer `TASK` commands.
 
@@ -133,7 +133,7 @@ Add your own columns or tabs any time. Claude finds columns by name, so nothing 
 
 ## Feedback
 
-Something confusing, broken, or missing? [Open an issue](https://github.com/Python123532/claude-task-manager/issues). Include the command you ran and what you expected; leave out anything private from your sheet.
+Something confusing, broken, or missing? [Open an issue](https://github.com/Python123532/Third-Shift/issues). Include the command you ran and what you expected; leave out anything private from your sheet.
 
 ## What's in this repo
 
